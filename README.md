@@ -536,10 +536,3 @@ Traversal/
 
 ---
 
-<div align="center">
-
-### 👤 Geliştirici
-
-Bu proje, ASP.NET Core ile N-katmanlı mimari, Identity, AutoMapper, SignalR, CQRS/MediatR ve modern web teknolojilerini uygulamalı olarak öğrenmek amacıyla geliştirilmiştir.
-
-</div>
