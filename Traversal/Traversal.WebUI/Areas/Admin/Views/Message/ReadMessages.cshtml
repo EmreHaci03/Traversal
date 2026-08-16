@@ -1,0 +1,457 @@
+﻿@model List<ResultMessageDto>
+@{
+    ViewData["Title"] = "Okunan Mesajlar";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<style>
+    .page-header-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+    }
+
+        .page-header-row h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .page-header-row p {
+            font-size: 13.5px;
+            color: #888;
+            margin-top: 4px;
+        }
+
+    .table-card {
+        background: #fff;
+        border-radius: 14px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        overflow: hidden;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    thead {
+        background: #f8f9fb;
+    }
+
+    th {
+        text-align: left;
+        padding: 14px 20px;
+        font-size: 12.5px;
+        font-weight: 700;
+        color: #888;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+        border-bottom: 1px solid #eee;
+    }
+
+    td {
+        padding: 14px 20px;
+        font-size: 14px;
+        color: #333;
+        border-bottom: 1px solid #f2f2f2;
+        vertical-align: middle;
+    }
+
+    tbody tr:hover {
+        background: #fafbfc;
+    }
+
+    tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    .sender-name {
+        font-weight: 700;
+        color: #1a1a1a;
+    }
+
+    .sender-email {
+        font-size: 12px;
+        color: #999;
+    }
+
+    .msg-subject {
+        font-weight: 600;
+        color: #333;
+    }
+
+    .msg-preview {
+        font-size: 12.5px;
+        color: #999;
+        max-width: 280px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .msg-date {
+        font-size: 12.5px;
+        color: #888;
+    }
+
+    .status-badge {
+        font-size: 11.5px;
+        font-weight: 600;
+        padding: 5px 12px;
+        border-radius: 20px;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        background: #eafbea;
+        color: #2e7d32;
+    }
+
+    .action-btns {
+        display: flex;
+        gap: 8px;
+    }
+
+    .action-btn {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        font-size: 13px;
+        border: none;
+        cursor: pointer;
+    }
+
+        .action-btn.view {
+            background: #eaf4fd;
+            color: #2874a6;
+        }
+
+            .action-btn.view:hover {
+                background: #2874a6;
+                color: #fff;
+            }
+
+        .action-btn.delete {
+            background: #fdeaea;
+            color: #c0392b;
+        }
+
+            .action-btn.delete:hover {
+                background: #c0392b;
+                color: #fff;
+            }
+
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+    }
+
+        .empty-state i {
+            font-size: 40px;
+            color: #ddd;
+            margin-bottom: 16px;
+        }
+
+        .empty-state p {
+            color: #999;
+            font-size: 14.5px;
+        }
+
+    .alert-success {
+        background: #eafbea;
+        color: #2e7d32;
+        padding: 13px 18px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        font-size: 14px;
+    }
+
+    .alert-danger {
+        background: #fdeaea;
+        color: #c0392b;
+        padding: 13px 18px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        font-size: 14px;
+    }
+
+    /* Detay Modal */
+    .modal-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(20, 22, 31, 0.5);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+    .msg-modal-box {
+        background: #fff;
+        border-radius: 16px;
+        padding: 0;
+        width: 100%;
+        max-width: 500px;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+        overflow: hidden;
+    }
+
+    .msg-modal-head {
+        padding: 22px 26px;
+        border-bottom: 1px solid #f0f0f0;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+        .msg-modal-head h5 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+        }
+
+        .msg-modal-head .meta {
+            font-size: 12.5px;
+            color: #999;
+        }
+
+    .msg-modal-close {
+        background: none;
+        border: none;
+        font-size: 18px;
+        color: #aaa;
+        cursor: pointer;
+    }
+
+    .msg-modal-body {
+        padding: 22px 26px;
+        font-size: 14px;
+        color: #444;
+        line-height: 1.7;
+        max-height: 300px;
+        overflow-y: auto;
+    }
+
+    .msg-modal-footer {
+        padding: 18px 26px;
+        border-top: 1px solid #f0f0f0;
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+    }
+
+    .delete-modal-box {
+        background: #fff;
+        border-radius: 16px;
+        padding: 28px;
+        width: 100%;
+        max-width: 360px;
+        text-align: center;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+    }
+
+    .modal-icon {
+        width: 56px;
+        height: 56px;
+        background: #fdeaea;
+        color: #c0392b;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        margin: 0 auto 16px;
+    }
+
+    .delete-modal-box h5 {
+        font-size: 16px;
+        font-weight: 700;
+        color: #1a1a1a;
+        margin-bottom: 8px;
+    }
+
+    .delete-modal-box p {
+        font-size: 13.5px;
+        color: #888;
+        margin-bottom: 22px;
+    }
+
+    .modal-actions {
+        display: flex;
+        gap: 10px;
+    }
+
+    .modal-btn {
+        flex: 1;
+        padding: 11px;
+        border-radius: 9px;
+        font-weight: 600;
+        font-size: 13.5px;
+        cursor: pointer;
+        border: none;
+        text-decoration: none;
+        text-align: center;
+    }
+
+        .modal-btn.cancel {
+            background: #f5f5f5;
+            color: #666;
+        }
+
+            .modal-btn.cancel:hover {
+                background: #ececec;
+            }
+
+        .modal-btn.confirm {
+            background: #c0392b;
+            color: #fff;
+        }
+
+            .modal-btn.confirm:hover {
+                background: #a5301f;
+            }
+</style>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert-success"><i class="fa fa-check-circle mr-1" aria-hidden="true"></i> @TempData["Success"]</div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert-danger"><i class="fa fa-exclamation-circle mr-1" aria-hidden="true"></i> @TempData["Error"]</div>
+}
+
+<div class="page-header-row">
+    <div>
+        <h3>Okunan Mesajlar</h3>
+        <p>Daha önce görüntülenmiş mesajları buradan takip edebilirsiniz.</p>
+    </div>
+</div>
+
+<div class="table-card">
+    @if (Model != null && Model.Any())
+    {
+        <table>
+            <thead>
+                <tr>
+                    <th>Gönderen</th>
+                    <th>Konu</th>
+                    <th>Tarih</th>
+                    <th>Durum</th>
+                    <th>İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <div class="sender-name">@item.NameSurname</div>
+                            <div class="sender-email">@item.Email</div>
+                        </td>
+                        <td>
+                            <div class="msg-subject">@item.Subject</div>
+                            <div class="msg-preview">@item.Content</div>
+                        </td>
+                        <td class="msg-date">@item.SendDate.ToString("dd MMM yyyy, HH:mm")</td>
+                        <td>
+                            <span class="status-badge"><i class="fa fa-envelope-open" aria-hidden="true"></i> Okundu</span>
+                        </td>
+                        <td>
+                            <div class="action-btns">
+                                <button type="button" class="action-btn view" title="Görüntüle"
+                                        onclick="openViewModal('@item.NameSurname', '@item.Email', '@item.Subject', '@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(item.Content))', '@item.SendDate.ToString("dd MMM yyyy, HH:mm")')">
+                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                </button>
+                                <form asp-area="Admin" asp-controller="Message" asp-action="DeleteMessage" method="post" class="delete-form" data-name="@item.NameSurname">
+                                    <input type="hidden" name="id" value="@item.MessageId" />
+                                    <button type="button" class="action-btn delete" title="Sil" onclick="openDeleteModal(this)">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="empty-state">
+            <i class="fa fa-envelope-o" aria-hidden="true"></i>
+            <p>Henüz okunmuş mesaj bulunmuyor.</p>
+        </div>
+    }
+</div>
+
+<!-- Mesaj Görüntüleme Modalı -->
+<div class="modal-overlay" id="viewModal">
+    <div class="msg-modal-box">
+        <div class="msg-modal-head">
+            <div>
+                <h5 id="viewModalSubject"></h5>
+                <div class="meta"><span id="viewModalName"></span> · <span id="viewModalEmail"></span> · <span id="viewModalDate"></span></div>
+            </div>
+            <button type="button" class="msg-modal-close" onclick="closeViewModal()">&times;</button>
+        </div>
+        <div class="msg-modal-body" id="viewModalContent"></div>
+        <div class="msg-modal-footer">
+            <button type="button" class="modal-btn cancel" onclick="closeViewModal()">Kapat</button>
+            <a id="viewModalReply" href="#" class="modal-btn confirm" style="background:#e67e22;">Yanıtla</a>
+        </div>
+    </div>
+</div>
+
+<!-- Silme Onay Modalı -->
+<div class="modal-overlay" id="deleteModal">
+    <div class="delete-modal-box">
+        <div class="modal-icon"><i class="fa fa-trash" aria-hidden="true"></i></div>
+        <h5>Mesajı Sil</h5>
+        <p><span id="deleteModalName"></span> adlı kişinin mesajı silinecek. Bu işlem geri alınamaz.</p>
+        <div class="modal-actions">
+            <button type="button" class="modal-btn cancel" onclick="closeDeleteModal()">Vazgeç</button>
+            <button type="button" class="modal-btn confirm" onclick="confirmDelete()">Evet, Sil</button>
+        </div>
+    </div>
+</div>
+
+@section Script {
+    <script>
+        function openViewModal(name, email, subject, content, date) {
+            document.getElementById('viewModalName').textContent = name;
+            document.getElementById('viewModalEmail').textContent = email;
+            document.getElementById('viewModalSubject').textContent = subject;
+            document.getElementById('viewModalContent').textContent = content;
+            document.getElementById('viewModalDate').textContent = date;
+            document.getElementById('viewModalReply').href = 'mailto:' + email + '?subject=Re: ' + subject;
+            document.getElementById('viewModal').classList.add('active');
+        }
+        function closeViewModal() {
+            document.getElementById('viewModal').classList.remove('active');
+        }
+
+        let formToDelete = null;
+        function openDeleteModal(btn) {
+            formToDelete = btn.closest('form');
+            document.getElementById('deleteModalName').textContent = formToDelete.dataset.name;
+            document.getElementById('deleteModal').classList.add('active');
+        }
+        function closeDeleteModal() {
+            document.getElementById('deleteModal').classList.remove('active');
+            formToDelete = null;
+        }
+        function confirmDelete() {
+            if (formToDelete) formToDelete.submit();
+        }
+    </script>
+}

@@ -1,0 +1,156 @@
+﻿@model List<ResultFavoriteDto>
+@{
+    ViewData["Title"] = "Favorilerim";
+    Layout = "~/Areas/Member/Views/Shared/_MemberLayout.cshtml";
+}
+<style>
+    .page-header-row {
+        margin-bottom: 24px;
+    }
+
+        .page-header-row h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .page-header-row p {
+            font-size: 13.5px;
+            color: #888;
+            margin-top: 4px;
+        }
+
+    .favorite-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+    }
+
+    .favorite-card {
+        background: #fff;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        position: relative;
+    }
+
+        .favorite-card .fav-img {
+            position: relative;
+            height: 170px;
+            overflow: hidden;
+        }
+
+            .favorite-card .fav-img img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+        .favorite-card .remove-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            color: #c0392b;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+            .favorite-card .remove-btn:hover {
+                background: #e74c3c;
+                color: #fff;
+                transform: scale(1.1);
+            }
+
+        .favorite-card .fav-body {
+            padding: 18px 20px;
+        }
+
+            .favorite-card .fav-body h4 {
+                font-size: 17px;
+                font-weight: 700;
+                color: #1a1a1a;
+                margin-bottom: 4px;
+            }
+
+            .favorite-card .fav-body .added-date {
+                font-size: 12.5px;
+                color: #999;
+                margin-bottom: 12px;
+            }
+
+            .favorite-card .fav-body .price {
+                font-size: 18px;
+                font-weight: 700;
+                color: #e67e22;
+            }
+
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        background: #fff;
+        border-radius: 16px;
+    }
+
+        .empty-state i {
+            font-size: 40px;
+            color: #ddd;
+            margin-bottom: 16px;
+        }
+
+        .empty-state p {
+            color: #999;
+            font-size: 14.5px;
+        }
+</style>
+
+@if (TempData["NotFound"] != null)
+{
+    <div class="alert-success">
+        <i class="fa fa-check-circle" aria-hidden="true"></i> @TempData["NotFound"]
+    </div>
+}
+<div class="page-header-row">
+    <h3>Favorilerim</h3>
+    <p>Beğendiğiniz ve kaydettiğiniz turlar burada listelenir.</p>
+</div>
+@if (Model != null && Model.Any())
+{
+    <div class="favorite-grid">
+        @foreach (var item in Model)
+        {
+            <div class="favorite-card">
+                <div class="fav-img">
+                    <img src="@item.DestinationImage" alt="@item.DestinationCity" />
+                    <form asp-area="Member" asp-controller="Favorite" asp-action="RemoveFavorite" method="post">
+                        <input type="hidden" name="id" value="@item.FavoriteId" />
+                        <button type="submit" class="remove-btn" title="Favorilerden sil">
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                        </button>
+                    </form>
+                </div>
+                <div class="fav-body">
+                    <h4>@item.DestinationCity</h4>
+                    <div class="added-date">@item.AddedDate.ToString("dd MMMM yyyy") tarihinde eklendi</div>
+                    <div class="price">₺@item.DestinationPrice</div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="empty-state">
+        <i class="fa fa-heart-o" aria-hidden="true"></i>
+        <p>Henüz favori tur eklemediniz.</p>
+    </div>
+}

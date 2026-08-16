@@ -1,0 +1,114 @@
+﻿@model List<ResultDestinationDto>
+<style>
+    .w3l-grids-3 .subject-card-header {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+        border-radius: 16px;
+        overflow: hidden;
+        background: #fff;
+    }
+
+        .w3l-grids-3 .subject-card-header:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+        }
+
+    .w3l-grids-3 .subject-img {
+        overflow: hidden;
+        border-radius: 12px;
+        width: 100%;
+        height: 160px;
+    }
+
+        .w3l-grids-3 .subject-img img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 12px;
+            transition: transform 0.5s ease;
+        }
+
+    .w3l-grids-3 .subject-card-header:hover .subject-img img {
+        transform: scale(1.08);
+    }
+
+    .w3l-grids-3 .subject-content h4 {
+        font-weight: 700;
+        margin-bottom: 4px;
+        color: #1a1a1a;
+    }
+
+    .w3l-grids-3 .subject-content p {
+        color: #888;
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+
+    .w3l-grids-3 .dst-btm {
+        display: flex;
+        align-items: baseline;
+        gap: 6px;
+        margin: 8px 0;
+    }
+
+        .w3l-grids-3 .dst-btm h6 {
+            font-size: 12px;
+            color: #aaa;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin: 0;
+        }
+
+        .w3l-grids-3 .dst-btm span {
+            font-size: 22px;
+            font-weight: 700;
+            color: #e67e22;
+        }
+
+    .w3l-grids-3 .sub-para {
+        font-size: 13.5px;
+        color: #999;
+        line-height: 1.6;
+    }
+
+    .w3l-grids-3 .card_title {
+        text-decoration: none;
+        display: block;
+    }
+</style>
+
+<section class="w3l-grids-3 py-5">
+    <div class="container py-md-5">
+        <div class="title-content text-left mb-lg-5 mb-4">
+            <h6 class="sub-title">Ziyaret</h6>
+            <h3 class="hny-title">Popüler Destinasyonlar</h3>
+        </div>
+        <div class="row bottom-ab-grids">
+            <!--/row-grids-->
+            @foreach (var item in Model.Take(4))
+            {
+                <div class="col-lg-6 subject-card mt-lg-0 mt-4">
+                    <div class="subject-card-header p-4">
+                        <a href="/Destination/DestinationDetail/@item.DestinationId" class="card_title p-lg-4d-block">
+                            <div class="row align-items-center">
+                                <div class="col-sm-5 subject-img">
+                                    <img src="@item.Image" class="img-fluid" alt="">
+                                </div>
+                                <div class="col-sm-7 subject-content mt-sm-0 mt-4">
+                                    <h4>@item.City</h4>
+                                    <p>@item.DayNight</p>
+                                    <div class="dst-btm">
+                                        <h6 class=""> Başlayan Fiyatlarla </h6>
+                                        <span>₺@item.Price</span>
+                                    </div>
+                                    <p class="sub-para">@item.Description</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+</section>

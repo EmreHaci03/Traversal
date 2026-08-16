@@ -1,0 +1,126 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Giriş Gerekli - Traversal</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1a1d29, #2a2e3f);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .error-box {
+            max-width: 480px;
+        }
+
+        .error-icon {
+            width: 100px;
+            height: 100px;
+            background: rgba(52, 152, 219, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 28px;
+            font-size: 40px;
+            color: #3498db;
+        }
+
+        .error-code {
+            font-size: 68px;
+            font-weight: 800;
+            color: #fff;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        .error-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .error-desc {
+            font-size: 14.5px;
+            color: #b8bcc8;
+            margin-bottom: 32px;
+            line-height: 1.7;
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .home-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #e67e22;
+            color: #fff;
+            text-decoration: none;
+            padding: 13px 32px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 14.5px;
+            transition: background 0.25s ease;
+        }
+
+            .home-btn:hover {
+                background: #cf6c14;
+            }
+
+        .login-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: transparent;
+            color: #fff;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.25);
+            padding: 13px 32px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 14.5px;
+            transition: border-color 0.25s ease;
+        }
+
+            .login-btn:hover {
+                border-color: #e67e22;
+                color: #e67e22;
+            }
+    </style>
+</head>
+<body>
+    <div class="error-box">
+        <div class="error-icon"><i class="fa fa-user-times" aria-hidden="true"></i></div>
+        <div class="error-code">401</div>
+        <div class="error-title">Giriş Yapmanız Gerekiyor</div>
+        <p class="error-desc">Bu sayfayı görüntülemek için giriş yapmalısınız. Hesabınız yoksa hemen kayıt olabilirsiniz.</p>
+        <div class="btn-row">
+            <a href="/Account/Login" class="home-btn"><i class="fa fa-sign-in" aria-hidden="true"></i> Giriş Yap</a>
+            <a href="/Default/Index" class="login-btn"><i class="fa fa-home" aria-hidden="true"></i> Anasayfa</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,185 @@
+﻿@model List<ResultFeatureGridDto>
+<style>
+    .best-rooms {
+        background: #f8f9fb;
+    }
+
+    /* Grid yükseklik hizalama */
+    .ban-content-inf {
+        display: flex;
+        align-items: stretch;
+    }
+
+        .ban-content-inf > .maghny-gd-1 {
+            display: flex;
+        }
+
+        .ban-content-inf .row {
+            flex: 1;
+        }
+
+    /* SOL büyük kart */
+    .maghny-grid {
+        position: relative;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        height: 100%;
+        width: 100%;
+    }
+
+        .maghny-grid figure {
+            margin: 0;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .maghny-grid img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+        }
+
+        .maghny-grid:hover img {
+            transform: scale(1.06);
+        }
+
+        .maghny-grid figcaption {
+            position: absolute;
+            z-index: 2;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 32px 28px;
+            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 60%, transparent 100%);
+            color: #fff;
+        }
+
+        .maghny-grid .badge-featured {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 3;
+            background: #e67e22;
+            color: #fff;
+            font-size: 11.5px;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .maghny-grid figcaption h4 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #fff !important;
+        }
+
+        .maghny-grid figcaption p {
+            font-size: 14.5px;
+            color: #f0f0f0 !important;
+            line-height: 1.6;
+            margin-bottom: 0;
+            max-width: 90%;
+        }
+
+        .maghny-grid .price-tag {
+            display: inline-block;
+            margin-top: 10px;
+            background: #e67e22;
+            color: #fff !important;
+            font-weight: 700;
+            font-size: 15px;
+            padding: 6px 14px;
+            border-radius: 8px;
+        }
+
+    /* SAĞ küçük kartlar */
+    .small-grid {
+        position: relative;
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.07);
+        height: 100%;
+        min-height: 220px;
+    }
+
+        .small-grid img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+        }
+
+        .small-grid:hover img {
+            transform: scale(1.08);
+        }
+
+        .small-grid figcaption {
+            position: absolute;
+            z-index: 2;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 18px 16px;
+            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%);
+            color: #fff;
+        }
+
+            .small-grid figcaption h4 {
+                font-size: 15.5px;
+                font-weight: 700;
+                margin-bottom: 3px;
+                color: #fff !important;
+            }
+
+            .small-grid figcaption p {
+                font-size: 12px;
+                color: #ddd !important;
+                margin-bottom: 0;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+</style>
+
+<div class="best-rooms py-5">
+    <div class="container py-md-5">
+        <div class="row mb-4">
+            <div class="col-12 text-center">
+                <h6 class="text-uppercase" style="color:#e67e22; font-weight:700; letter-spacing:1px; font-size:12.5px;">Keşfet</h6>
+                <h2 style="font-size:30px; font-weight:700; color:#1a1a1a;">Öne Çıkan Rotalar</h2>
+            </div>
+        </div>
+        <div class="ban-content-inf row">
+            @await Component.InvokeAsync("FeatureGridMain")
+
+            <div class="maghny-gd-1 col-lg-6 mt-lg-0 mt-4">
+                <div class="row">
+                    @foreach (var item in Model)
+                    {
+                        <div class="maghny-gd-1 col-6 mt-4">
+                            <div class="small-grid">
+                                <img class="img-fluid" src="@item.Image" alt="@item.Title" />
+                                <figcaption>
+                                    <h4>@item.Title</h4>
+                                    <p>@item.Description</p> 
+                                </figcaption>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

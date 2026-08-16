@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="Traversal.BusinessLayer/Traversal.BusinessLayer.csproj" />
+  <Project Path="Traversal.DataAccessLayer/Traversal.DataAccessLayer.csproj" />
+  <Project Path="Traversal.DtoLayer/Traversal.DtoLayer.csproj" />
+  <Project Path="Traversal.EntityLayer/Traversal.EntityLayer.csproj" />
+  <Project Path="Traversal.WebUI/Traversal.WebUI.csproj" />
+</Solution>

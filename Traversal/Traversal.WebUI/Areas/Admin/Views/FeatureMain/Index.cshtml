@@ -1,0 +1,394 @@
+﻿@model List<ResultFeatureMainDto>
+@{
+    ViewData["Title"] = "Öne Çıkan (Ana)";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<style>
+    .page-header-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+    }
+
+        .page-header-row h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .page-header-row p {
+            font-size: 13.5px;
+            color: #888;
+            margin-top: 4px;
+        }
+
+    .add-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #e67e22;
+        color: #fff;
+        text-decoration: none;
+        padding: 11px 24px;
+        border-radius: 9px;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+        .add-btn:hover {
+            background: #cf6c14;
+            color: #fff;
+        }
+
+    .table-card {
+        background: #fff;
+        border-radius: 14px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        overflow: hidden;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    thead {
+        background: #f8f9fb;
+    }
+
+    th {
+        text-align: left;
+        padding: 14px 20px;
+        font-size: 12.5px;
+        font-weight: 700;
+        color: #888;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+        border-bottom: 1px solid #eee;
+    }
+
+    td {
+        padding: 14px 20px;
+        font-size: 14px;
+        color: #333;
+        border-bottom: 1px solid #f2f2f2;
+        vertical-align: middle;
+    }
+
+    tbody tr:hover {
+        background: #fafbfc;
+    }
+
+    tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    .fm-thumb {
+        width: 56px;
+        height: 56px;
+        border-radius: 10px;
+        object-fit: cover;
+    }
+
+    .fm-title {
+        font-weight: 700;
+        color: #1a1a1a;
+    }
+
+    .fm-desc {
+        font-size: 12.5px;
+        color: #999;
+        max-width: 320px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .status-badge {
+        font-size: 11.5px;
+        font-weight: 600;
+        padding: 5px 12px;
+        border-radius: 20px;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+        .status-badge.active {
+            background: #eafbea;
+            color: #2e7d32;
+        }
+
+        .status-badge.passive {
+            background: #f2f2f2;
+            color: #888;
+        }
+
+    .action-btns {
+        display: flex;
+        gap: 8px;
+    }
+
+    .action-btn {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        font-size: 13px;
+        border: none;
+        cursor: pointer;
+    }
+
+        .action-btn.edit {
+            background: #eaf4fd;
+            color: #2874a6;
+        }
+
+            .action-btn.edit:hover {
+                background: #2874a6;
+                color: #fff;
+            }
+
+        .action-btn.delete {
+            background: #fdeaea;
+            color: #c0392b;
+        }
+
+            .action-btn.delete:hover {
+                background: #c0392b;
+                color: #fff;
+            }
+
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+    }
+
+        .empty-state i {
+            font-size: 40px;
+            color: #ddd;
+            margin-bottom: 16px;
+        }
+
+        .empty-state p {
+            color: #999;
+            font-size: 14.5px;
+        }
+
+    .alert-success {
+        background: #eafbea;
+        color: #2e7d32;
+        padding: 13px 18px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        font-size: 14px;
+    }
+
+    .alert-danger {
+        background: #fdeaea;
+        color: #c0392b;
+        padding: 13px 18px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        font-size: 14px;
+    }
+
+    /* Modal */
+    .modal-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(20, 22, 31, 0.5);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+    .modal-box {
+        background: #fff;
+        border-radius: 16px;
+        padding: 28px;
+        width: 100%;
+        max-width: 360px;
+        text-align: center;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+    }
+
+    .modal-icon {
+        width: 56px;
+        height: 56px;
+        background: #fdeaea;
+        color: #c0392b;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        margin: 0 auto 16px;
+    }
+
+    .modal-box h5 {
+        font-size: 16px;
+        font-weight: 700;
+        color: #1a1a1a;
+        margin-bottom: 8px;
+    }
+
+    .modal-box p {
+        font-size: 13.5px;
+        color: #888;
+        margin-bottom: 22px;
+    }
+
+    .modal-actions {
+        display: flex;
+        gap: 10px;
+    }
+
+    .modal-btn {
+        flex: 1;
+        padding: 11px;
+        border-radius: 9px;
+        font-weight: 600;
+        font-size: 13.5px;
+        cursor: pointer;
+        border: none;
+    }
+
+        .modal-btn.cancel {
+            background: #f5f5f5;
+            color: #666;
+        }
+
+            .modal-btn.cancel:hover {
+                background: #ececec;
+            }
+
+        .modal-btn.confirm {
+            background: #c0392b;
+            color: #fff;
+        }
+
+            .modal-btn.confirm:hover {
+                background: #a5301f;
+            }
+</style>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert-success"><i class="fa fa-check-circle mr-1" aria-hidden="true"></i> @TempData["Success"]</div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert-danger"><i class="fa fa-exclamation-circle mr-1" aria-hidden="true"></i> @TempData["Error"]</div>
+}
+
+<div class="page-header-row">
+    <div>
+        <h3>Öne Çıkan (Ana)</h3>
+        <p>Anasayfadaki büyük öne çıkan kartı buradan yönetebilirsiniz.</p>
+    </div>
+    <a asp-area="Admin" asp-controller="FeatureMain" asp-action="CreateFeatureMain" class="add-btn">
+        <i class="fa fa-plus" aria-hidden="true"></i> Yeni Ekle
+    </a>
+</div>
+
+<div class="table-card">
+    @if (Model != null && Model.Any())
+    {
+        <table>
+            <thead>
+                <tr>
+                    <th>Görsel</th>
+                    <th>Başlık</th>
+                    <th>Açıklama</th>
+                    <th>Durum</th>
+                    <th>İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td><img src="@item.Image" class="fm-thumb" alt="@item.Title" /></td>
+                        <td><span class="fm-title">@item.Title</span></td>
+                        <td><span class="fm-desc" title="@item.Description">@item.Description</span></td>
+                        <td>
+                            @if (item.Status)
+                            {
+                                <span class="status-badge active"><i class="fa fa-circle" style="font-size:6px;"></i> Aktif</span>
+                            }
+                            else
+                            {
+                                <span class="status-badge passive"><i class="fa fa-circle" style="font-size:6px;"></i> Pasif</span>
+                            }
+                        </td>
+                        <td>
+                            <div class="action-btns">
+                                <a asp-area="Admin" asp-controller="FeatureMain" asp-action="UpdateFeatureMain" asp-route-id="@item.FeatureMainId" class="action-btn edit" title="Düzenle">
+                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                </a>
+                                <form asp-area="Admin" asp-controller="FeatureMain" asp-action="DeleteFeatureMain" method="post" class="delete-form" data-title="@item.Title">
+                                    <input type="hidden" name="id" value="@item.FeatureMainId" />
+                                    <button type="button" class="action-btn delete" title="Sil" onclick="openDeleteModal(this)">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="empty-state">
+            <i class="fa fa-picture-o" aria-hidden="true"></i>
+            <p>Henüz kayıt eklenmemiş.</p>
+        </div>
+    }
+</div>
+
+<div class="modal-overlay" id="deleteModal">
+    <div class="modal-box">
+        <div class="modal-icon"><i class="fa fa-trash" aria-hidden="true"></i></div>
+        <h5>Kaydı Sil</h5>
+        <p><span id="deleteModalTitle"></span> silinecek. Bu işlem geri alınamaz.</p>
+        <div class="modal-actions">
+            <button type="button" class="modal-btn cancel" onclick="closeDeleteModal()">Vazgeç</button>
+            <button type="button" class="modal-btn confirm" onclick="confirmDelete()">Evet, Sil</button>
+        </div>
+    </div>
+</div>
+
+@section Script {
+    <script>
+        let formToDelete = null;
+
+        function openDeleteModal(btn) {
+            formToDelete = btn.closest('form');
+            document.getElementById('deleteModalTitle').textContent = formToDelete.dataset.title;
+            document.getElementById('deleteModal').classList.add('active');
+        }
+
+        function closeDeleteModal() {
+            document.getElementById('deleteModal').classList.remove('active');
+            formToDelete = null;
+        }
+
+        function confirmDelete() {
+            if (formToDelete) {
+                formToDelete.submit();
+            }
+        }
+    </script>
+}

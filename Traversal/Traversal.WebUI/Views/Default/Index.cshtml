@@ -1,0 +1,32 @@
+﻿@{
+    Layout = "~/Views/Shared/UI_Layout.cshtml";
+}
+<style>
+    .alert-success {
+        background: #eafbea;
+        color: #2e7d32;
+        padding: 13px 18px;
+        border-radius: 10px;
+        margin: 20px auto;
+        max-width: 1140px;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+</style>
+@if (TempData["Newsletter"] != null)
+{
+    <div class="alert-success"><i class="fa fa-check-circle mr-1" aria-hidden="true"></i> @TempData["Newsletter"]</div>
+}
+@await Component.InvokeAsync("MainSlider")
+
+@await Component.InvokeAsync("PopularDestinations")
+
+@await Component.InvokeAsync("Stats")
+
+@await Component.InvokeAsync("FeaturedTrips")
+
+@await Component.InvokeAsync("AboutTeaser")
+
+@await Component.InvokeAsync("Testimonial")

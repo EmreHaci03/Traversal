@@ -1,0 +1,18 @@
+﻿@model List<ResultInfoCardDto>
+<section class="w3l-grids1">
+    <div class="hny-three-grids py-5">
+        <div class="container py-lg-5">
+            <div class="row">
+                @foreach (var item in Model.Take(3))
+                {
+                    <div class="col-md-4 col-sm-6 mt-0 grids5-info">
+                        <a href="#url"><img src="@item.Image" class="img-fluid" alt="@item.Title" /></a>
+                        <h5>@item.SubTitle</h5>
+                        <h4><a href="#url">@item.Title</a></h4>
+                        <p>@item.Description</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,11 @@
+C:\Users\ersin\source\repos\Traversal\Traversal.DtoLayer\bin\Debug\net6.0\Traversal.DtoLayer.deps.json
+C:\Users\ersin\source\repos\Traversal\Traversal.DtoLayer\bin\Debug\net6.0\Traversal.DtoLayer.dll
+C:\Users\ersin\source\repos\Traversal\Traversal.DtoLayer\bin\Debug\net6.0\Traversal.DtoLayer.pdb
+C:\Users\ersin\source\repos\Traversal\Traversal.DtoLayer\obj\Debug\net6.0\Traversal.DtoLayer.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ersin\source\repos\Traversal\Traversal.DtoLayer\obj\Debug\net6.0\Traversal.DtoLayer.AssemblyInfoInputs.cache
+C:\Users\ersin\source\repos\Traversal\Traversal.DtoLayer\obj\Debug\net6.0\Traversal.DtoLayer.AssemblyInfo.cs
+C:\Users\ersin\source\repos\Traversal\Traversal.DtoLayer\obj\Debug\net6.0\Traversal.DtoLayer.csproj.CoreCompileInputs.cache
+C:\Users\ersin\source\repos\Traversal\Traversal.DtoLayer\obj\Debug\net6.0\Traversal.DtoLayer.dll
+C:\Users\ersin\source\repos\Traversal\Traversal.DtoLayer\obj\Debug\net6.0\refint\Traversal.DtoLayer.dll
+C:\Users\ersin\source\repos\Traversal\Traversal.DtoLayer\obj\Debug\net6.0\Traversal.DtoLayer.pdb
+C:\Users\ersin\source\repos\Traversal\Traversal.DtoLayer\obj\Debug\net6.0\ref\Traversal.DtoLayer.dll

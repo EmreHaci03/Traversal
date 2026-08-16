@@ -1,0 +1,17 @@
+C:\Users\ersin\source\repos\Traversal\Traversal.DataAccessLayer\bin\Debug\net6.0\Traversal.DataAccessLayer.deps.json
+C:\Users\ersin\source\repos\Traversal\Traversal.DataAccessLayer\bin\Debug\net6.0\Traversal.DataAccessLayer.dll
+C:\Users\ersin\source\repos\Traversal\Traversal.DataAccessLayer\bin\Debug\net6.0\Traversal.DataAccessLayer.pdb
+C:\Users\ersin\source\repos\Traversal\Traversal.DataAccessLayer\bin\Debug\net6.0\Traversal.EntityLayer.dll
+C:\Users\ersin\source\repos\Traversal\Traversal.DataAccessLayer\bin\Debug\net6.0\Traversal.EntityLayer.pdb
+C:\Users\ersin\source\repos\Traversal\Traversal.DataAccessLayer\obj\Debug\net6.0\Traversal.DataAccessLayer.csproj.AssemblyReference.cache
+C:\Users\ersin\source\repos\Traversal\Traversal.DataAccessLayer\obj\Debug\net6.0\Traversal.DataAccessLayer.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ersin\source\repos\Traversal\Traversal.DataAccessLayer\obj\Debug\net6.0\Traversal.DataAccessLayer.AssemblyInfoInputs.cache
+C:\Users\ersin\source\repos\Traversal\Traversal.DataAccessLayer\obj\Debug\net6.0\Traversal.DataAccessLayer.AssemblyInfo.cs
+C:\Users\ersin\source\repos\Traversal\Traversal.DataAccessLayer\obj\Debug\net6.0\Traversal.DataAccessLayer.csproj.CoreCompileInputs.cache
+C:\Users\ersin\source\repos\Traversal\Traversal.DataAccessLayer\obj\Debug\net6.0\Traversa.65A3DC24.Up2Date
+C:\Users\ersin\source\repos\Traversal\Traversal.DataAccessLayer\obj\Debug\net6.0\Traversal.DataAccessLayer.dll
+C:\Users\ersin\source\repos\Traversal\Traversal.DataAccessLayer\obj\Debug\net6.0\refint\Traversal.DataAccessLayer.dll
+C:\Users\ersin\source\repos\Traversal\Traversal.DataAccessLayer\obj\Debug\net6.0\Traversal.DataAccessLayer.pdb
+C:\Users\ersin\source\repos\Traversal\Traversal.DataAccessLayer\obj\Debug\net6.0\ref\Traversal.DataAccessLayer.dll
+C:\Users\ersin\source\repos\Traversal\Traversal.DataAccessLayer\bin\Debug\net6.0\Traversal.DataAccessLayer.runtimeconfig.json
+C:\Users\ersin\source\repos\Traversal\Traversal.DataAccessLayer\obj\Debug\net6.0\Traversal.DataAccessLayer.genruntimeconfig.cache

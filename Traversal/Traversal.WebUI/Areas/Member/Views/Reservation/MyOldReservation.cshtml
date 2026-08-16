@@ -1,0 +1,177 @@
+﻿@model List<ResultReservationDto>
+@{
+    ViewData["Title"] = "Rezervasyonlarım";
+    Layout = "~/Areas/Member/Views/Shared/_MemberLayout.cshtml";
+}
+<style>
+    .page-header-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+    }
+
+        .page-header-row h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .page-header-row p {
+            font-size: 13.5px;
+            color: #888;
+            margin-top: 4px;
+        }
+
+    .reservation-list {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .reservation-item {
+        background: #fff;
+        border-radius: 14px;
+        padding: 20px 24px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+        .reservation-item .info h5 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+        }
+
+        .reservation-item .info p {
+            font-size: 13px;
+            color: #888;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .reservation-item .meta {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+            .reservation-item .meta .persons {
+                font-size: 13.5px;
+                color: #555;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+            }
+
+    .status-badge {
+        font-size: 12px;
+        font-weight: 600;
+        padding: 6px 14px;
+        border-radius: 20px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+        .status-badge.pending {
+            background: #fff3e6;
+            color: #e67e22;
+        }
+
+        .status-badge.approved {
+            background: #eafbea;
+            color: #2e7d32;
+        }
+
+        .status-badge.cancelled {
+            background: #fdeaea;
+            color: #c0392b;
+        }
+
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        background: #fff;
+        border-radius: 16px;
+    }
+
+        .empty-state i {
+            font-size: 40px;
+            color: #ddd;
+            margin-bottom: 16px;
+        }
+
+        .empty-state p {
+            color: #999;
+            font-size: 14.5px;
+            margin-bottom: 20px;
+        }
+
+        .empty-state a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #e67e22;
+            color: #fff;
+            text-decoration: none;
+            padding: 11px 26px;
+            border-radius: 9px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+</style>
+
+<div class="page-header-row">
+    <div>
+        <h3>Rezervasyonlarım</h3>
+        <p>Aktif ve bekleyen rezervasyonlarınızı buradan takip edebilirsiniz.</p>
+    </div>
+</div>
+
+@if (Model != null && Model.Any())
+{
+    <div class="reservation-list">
+        @foreach (var item in Model)
+        {
+            var statusClass = item.Status switch
+            {
+                "Onaylandı" => "approved",
+                "İptal" => "cancelled",
+                "Beklemede" => "pending",
+                _ => "pending"
+            };
+
+            <div class="reservation-item">
+                <div class="info">
+                    <h5>@item.DestinationCity</h5>
+                    <p><i class="fa fa-calendar" aria-hidden="true"></i> @item.ReservationDate.ToString("dd MMMM yyyy")</p>
+                </div>
+
+                <div class="meta">
+                    <div class="persons">
+                        <i class="fa fa-users" aria-hidden="true"></i> @item.PersonCount kişi
+                    </div>
+
+                    <span class="status-badge @statusClass">
+                        <i class="fa fa-circle" style="font-size: 8px;" aria-hidden="true"></i> @item.Status
+                    </span>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="empty-state">
+        <i class="fa fa-calendar-o" aria-hidden="true"></i>
+        <p>Henüz bir rezervasyonunuz bulunmuyor.</p>
+        <a href="/Member/ActiveTours/Index"><i class="fa fa-compass" aria-hidden="true"></i> Turlara Göz At</a>
+    </div>
+}

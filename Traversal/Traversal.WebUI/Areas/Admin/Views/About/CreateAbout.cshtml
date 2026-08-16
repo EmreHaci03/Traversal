@@ -1,0 +1,287 @@
+﻿@model CreateAboutDto
+@{
+    ViewData["Title"] = "Yeni İçerik";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<style>
+    .col-lg-12 {
+        width: 100%;
+    }
+
+    .page-header-row {
+        margin-bottom: 24px;
+    }
+
+        .page-header-row h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .page-header-row p {
+            font-size: 13.5px;
+            color: #888;
+            margin-top: 4px;
+        }
+
+    .form-layout {
+        display: grid;
+        grid-template-columns: 2.2fr 1fr;
+        gap: 24px;
+        align-items: start;
+    }
+
+    @@media (max-width: 950px) {
+        .form-layout {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .form-card {
+        background: #fff;
+        border-radius: 16px;
+        padding: 32px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+
+    .section-divider {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 4px 0 22px;
+    }
+
+        .section-divider .num {
+            width: 24px;
+            height: 24px;
+            background: #e67e22;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .section-divider span {
+            font-size: 12.5px;
+            font-weight: 700;
+            color: #cf6c14;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #555;
+            display: block;
+            margin-bottom: 7px;
+        }
+
+        .form-group .required {
+            color: #e74c3c;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #e5e5e5;
+            border-radius: 10px;
+            font-size: 14.5px;
+        }
+
+            .form-group input:focus,
+            .form-group textarea:focus {
+                outline: none;
+                border-color: #e67e22;
+                box-shadow: 0 0 0 3px rgba(230,126,34,0.1);
+            }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 130px;
+        }
+
+    .preview-card {
+        background: #fff;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        position: sticky;
+        top: 20px;
+    }
+
+        .preview-card .preview-label {
+            padding: 16px 20px 0;
+            font-size: 12px;
+            font-weight: 700;
+            color: #aaa;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+    .preview-img-box {
+        margin: 14px 20px 0;
+        height: 160px;
+        border-radius: 12px;
+        background: #f4f5f9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ccc;
+        font-size: 34px;
+        overflow: hidden;
+    }
+
+        .preview-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+    .preview-body {
+        padding: 18px 20px 22px;
+    }
+
+        .preview-body h5 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 6px;
+        }
+
+        .preview-body p {
+            font-size: 12.5px;
+            color: #999;
+            line-height: 1.6;
+        }
+
+    .form-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        margin-top: 24px;
+        padding-top: 22px;
+        border-top: 1px solid #f0f0f0;
+    }
+
+    .save-btn {
+        background: #e67e22;
+        color: #fff;
+        border: none;
+        padding: 13px 34px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 14.5px;
+        cursor: pointer;
+    }
+
+        .save-btn:hover {
+            background: #cf6c14;
+        }
+
+    .cancel-btn {
+        background: #fff;
+        color: #888;
+        border: 1px solid #e0e0e0;
+        padding: 13px 28px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 14.5px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+    }
+
+        .cancel-btn:hover {
+            background: #f5f5f5;
+        }
+
+    .text-danger {
+        color: #c0392b;
+        font-size: 12.5px;
+        display: block;
+        margin-top: 5px;
+    }
+</style>
+
+<div class="col-lg-12">
+    <div class="page-header-row">
+        <h3>Yeni İçerik Ekle</h3>
+        <p>"Hakkımızda" sayfası için yeni bir içerik bloğu oluşturun.</p>
+    </div>
+
+    <form asp-area="Admin" asp-controller="About" asp-action="CreateAbout" method="post">
+
+        <div class="form-layout">
+            <div class="form-card">
+                <div class="section-divider"><span class="num">1</span> <span>İçerik Bilgileri</span></div>
+
+                <div class="form-group">
+                    <label asp-for="Title">Başlık <span class="required">*</span></label>
+                    <input asp-for="Title" placeholder="Örn: Biz Kimiz?" oninput="updatePreview()" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Description">Açıklama <span class="required">*</span></label>
+                    <textarea asp-for="Description" placeholder="İçerik açıklamasını buraya yazın..." oninput="updatePreview()"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Image">Görsel URL <span class="required">*</span></label>
+                    <input asp-for="Image" placeholder="https://..." oninput="updatePreview()" id="imageInput" />
+                    <span asp-validation-for="Image" class="text-danger"></span>
+                </div>
+
+                <div class="form-footer">
+                    <a asp-area="Admin" asp-controller="About" asp-action="AboutList" class="cancel-btn">Vazgeç</a>
+                    <button type="submit" class="save-btn"><i class="fa fa-check mr-1" aria-hidden="true"></i> Kaydet</button>
+                </div>
+            </div>
+
+            <div class="preview-card">
+                <div class="preview-label">Canlı Önizleme</div>
+                <div class="preview-img-box" id="previewImgBox">
+                    <i class="fa fa-picture-o" aria-hidden="true"></i>
+                </div>
+                <div class="preview-body">
+                    <h5 id="previewTitle">Başlık</h5>
+                    <p id="previewDescription">Açıklama burada görünecek...</p>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Script {
+    <script>
+        function updatePreview() {
+            const title = document.getElementById('Title').value || 'Başlık';
+            const description = document.getElementById('Description').value || 'Açıklama burada görünecek...';
+            const image = document.getElementById('imageInput').value;
+
+            document.getElementById('previewTitle').textContent = title;
+            document.getElementById('previewDescription').textContent = description;
+
+            const imgBox = document.getElementById('previewImgBox');
+            if (image) {
+                imgBox.innerHTML = '<img src="' + image + '" alt="preview" onerror="this.style.display=\'none\'" />';
+            } else {
+                imgBox.innerHTML = '<i class="fa fa-picture-o" aria-hidden="true"></i>';
+            }
+        }
+    </script>
+}

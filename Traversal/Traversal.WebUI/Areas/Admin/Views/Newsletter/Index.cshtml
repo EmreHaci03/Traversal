@@ -1,0 +1,159 @@
+﻿@model List<ResultNewsletterDto>
+@{
+    ViewData["Title"] = "Bülten Aboneleri";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<style>
+    .page-header-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+    }
+
+        .page-header-row h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .page-header-row p {
+            font-size: 13.5px;
+            color: #888;
+            margin-top: 4px;
+        }
+
+    .table-card {
+        background: #fff;
+        border-radius: 14px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        overflow: hidden;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    thead {
+        background: #f8f9fb;
+    }
+
+    th {
+        text-align: left;
+        padding: 14px 20px;
+        font-size: 12.5px;
+        font-weight: 700;
+        color: #888;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+        border-bottom: 1px solid #eee;
+    }
+
+    td {
+        padding: 14px 20px;
+        font-size: 14px;
+        color: #333;
+        border-bottom: 1px solid #f2f2f2;
+        vertical-align: middle;
+    }
+
+    tbody tr:hover {
+        background: #fafbfc;
+    }
+
+    tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    .subscriber-email {
+        font-weight: 600;
+        color: #1a1a1a;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .subscriber-icon {
+        width: 34px;
+        height: 34px;
+        background: #fff3e6;
+        color: #e67e22;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        flex-shrink: 0;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+    }
+
+        .empty-state i {
+            font-size: 40px;
+            color: #ddd;
+            margin-bottom: 16px;
+        }
+
+        .empty-state p {
+            color: #999;
+            font-size: 14.5px;
+        }
+
+    .subscriber-count-badge {
+        background: #fff3e6;
+        color: #e67e22;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 8px 16px;
+        border-radius: 20px;
+    }
+</style>
+
+<div class="page-header-row">
+    <div>
+        <h3>Bülten Aboneleri</h3>
+        <p>E-posta bültenine kayıtlı kullanıcıları buradan görüntüleyebilirsiniz.</p>
+    </div>
+    @if (Model != null && Model.Any())
+    {
+        <div class="subscriber-count-badge">
+            <i class="fa fa-users mr-1" aria-hidden="true"></i> @Model.Count Abone
+        </div>
+    }
+</div>
+<div class="table-card">
+    @if (Model != null && Model.Any())
+    {
+        <table>
+            <thead>
+                <tr>
+                    <th>E-posta Adresi</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <div class="subscriber-email">
+                                <div class="subscriber-icon"><i class="fa fa-envelope" aria-hidden="true"></i></div>
+                                @item.Mail
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="empty-state">
+            <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+            <p>Henüz bülten abonesi bulunmuyor.</p>
+        </div>
+    }
+</div>

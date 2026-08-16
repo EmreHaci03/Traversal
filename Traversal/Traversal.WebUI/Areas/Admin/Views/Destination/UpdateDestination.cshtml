@@ -1,0 +1,548 @@
+﻿@model UpdateDestinationDto
+@{
+    ViewData["Title"] = "Destinasyon Güncelle";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<style>
+    .col-lg-12 {
+        width: 100%;
+    }
+
+    .page-header-row {
+        margin-bottom: 24px;
+    }
+
+        .page-header-row h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .page-header-row p {
+            font-size: 13.5px;
+            color: #888;
+            margin-top: 4px;
+        }
+
+    .form-layout {
+        display: grid;
+        grid-template-columns: 2.2fr 1fr;
+        gap: 24px;
+        align-items: start;
+    }
+
+    @@media (max-width: 950px) {
+        .form-layout {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .form-card {
+        background: #fff;
+        border-radius: 16px;
+        padding: 32px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        margin-bottom: 24px;
+    }
+
+    .section-divider {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 4px 0 22px;
+    }
+
+        .section-divider .num {
+            width: 24px;
+            height: 24px;
+            background: #e67e22;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .section-divider span {
+            font-size: 12.5px;
+            font-weight: 700;
+            color: #cf6c14;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    @@media (max-width: 700px) {
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #555;
+            display: block;
+            margin-bottom: 7px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #e5e5e5;
+            border-radius: 10px;
+            font-size: 14.5px;
+            transition: border-color 0.2s ease;
+        }
+
+            .form-group input:focus,
+            .form-group textarea:focus {
+                outline: none;
+                border-color: #e67e22;
+                box-shadow: 0 0 0 3px rgba(230,126,34,0.1);
+            }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 90px;
+        }
+
+        .form-group .hint {
+            font-size: 11.5px;
+            color: #aaa;
+            margin-top: 5px;
+        }
+
+    .price-input-wrap {
+        position: relative;
+    }
+
+        .price-input-wrap span {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .price-input-wrap input {
+            padding-left: 32px;
+        }
+
+    /* Mevcut görsel önizlemeleri */
+    .current-thumbs {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+        margin-bottom: 22px;
+    }
+
+    .current-thumb {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: #f8f9fb;
+        border-radius: 10px;
+        padding: 8px 14px 8px 8px;
+    }
+
+        .current-thumb img {
+            width: 46px;
+            height: 46px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .current-thumb span {
+            font-size: 11.5px;
+            color: #888;
+            font-weight: 600;
+        }
+
+    /* Önizleme kartı (sağ sütun) */
+    .preview-card {
+        background: #fff;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        position: sticky;
+        top: 20px;
+    }
+
+        .preview-card .preview-label {
+            padding: 16px 20px 0;
+            font-size: 12px;
+            font-weight: 700;
+            color: #aaa;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+    .preview-img-box {
+        margin: 14px 20px 0;
+        height: 160px;
+        border-radius: 12px;
+        background: #f4f5f9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ccc;
+        font-size: 34px;
+        overflow: hidden;
+    }
+
+        .preview-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+    .preview-body {
+        padding: 18px 20px 22px;
+    }
+
+        .preview-body h5 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+        }
+
+        .preview-body p {
+            font-size: 12.5px;
+            color: #999;
+            margin-bottom: 14px;
+        }
+
+    .preview-meta {
+        display: flex;
+        justify-content: space-between;
+        padding-top: 14px;
+        border-top: 1px solid #f0f0f0;
+    }
+
+        .preview-meta .price {
+            font-size: 18px;
+            font-weight: 700;
+            color: #e67e22;
+        }
+
+        .preview-meta .cap {
+            font-size: 12.5px;
+            color: #888;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+    .status-box {
+        background: #fff;
+        border-radius: 16px;
+        padding: 20px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        margin-top: 20px;
+    }
+
+        .status-box h6 {
+            font-size: 13px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 12px;
+        }
+
+    .status-toggle-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+        .status-toggle-row .status-text {
+            font-size: 13px;
+            color: #666;
+        }
+
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 44px;
+        height: 24px;
+    }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .switch .slider {
+            position: absolute;
+            cursor: pointer;
+            inset: 0;
+            background-color: #e0e0e0;
+            transition: 0.3s;
+            border-radius: 24px;
+        }
+
+            .switch .slider::before {
+                position: absolute;
+                content: "";
+                height: 18px;
+                width: 18px;
+                left: 3px;
+                bottom: 3px;
+                background-color: white;
+                transition: 0.3s;
+                border-radius: 50%;
+            }
+
+        .switch input:checked + .slider {
+            background-color: #27ae60;
+        }
+
+            .switch input:checked + .slider::before {
+                transform: translateX(20px);
+            }
+
+    .form-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        margin-top: 8px;
+        padding-top: 22px;
+        border-top: 1px solid #f0f0f0;
+    }
+
+    .save-btn {
+        background: #e67e22;
+        color: #fff;
+        border: none;
+        padding: 13px 34px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 14.5px;
+        cursor: pointer;
+        transition: background 0.2s ease;
+    }
+
+        .save-btn:hover {
+            background: #cf6c14;
+        }
+
+    .cancel-btn {
+        background: #fff;
+        color: #888;
+        border: 1px solid #e0e0e0;
+        padding: 13px 28px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 14.5px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+    }
+
+        .cancel-btn:hover {
+            background: #f5f5f5;
+        }
+</style>
+
+<div class="col-lg-12">
+
+    <div class="page-header-row">
+        <h3>Destinasyon Güncelle</h3>
+        <p>Mevcut destinasyon bilgilerini düzenleyin.</p>
+    </div>
+
+    <form asp-area="Admin" asp-controller="Destination" asp-action="UpdateDestination" method="post" id="destinationForm">
+        <div asp-validation-summary="All" class="text-danger mb-3"></div>
+        <input type="hidden" asp-for="DestinationId" />
+
+        <div class="form-layout">
+            <!-- SOL: Form alanları -->
+            <div>
+                <div class="form-card">
+                    <div class="section-divider"><span class="num">1</span> <span>Temel Bilgiler</span></div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label asp-for="City">Şehir</label>
+                            <input asp-for="City" oninput="updatePreview()" />
+                            <span asp-validation-for="City" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="DayNight">Süre</label>
+                            <input asp-for="DayNight" oninput="updatePreview()" />
+                            <span asp-validation-for="DayNight" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Description">Kısa Açıklama</label>
+                        <textarea asp-for="Description" style="min-height: 80px;"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-card">
+                    <div class="section-divider"><span class="num">2</span> <span>Fiyat &amp; Kapasite</span></div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label asp-for="Price">Fiyat</label>
+                            <div class="price-input-wrap">
+                                <span>₺</span>
+                                <input asp-for="Price" type="number" step="0.01" oninput="updatePreview()" />
+                            </div>
+                            <span asp-validation-for="Price" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Capacity">Kapasite</label>
+                            <input asp-for="Capacity" type="number" oninput="updatePreview()" />
+                            <span asp-validation-for="Capacity" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-card">
+                    <div class="section-divider"><span class="num">3</span> <span>Görseller</span></div>
+
+                    @if (!string.IsNullOrEmpty(Model.Image) || !string.IsNullOrEmpty(Model.CoverImage) || !string.IsNullOrEmpty(Model.Image2))
+                    {
+                        <div class="current-thumbs">
+                            @if (!string.IsNullOrEmpty(Model.Image))
+                            {
+                                <div class="current-thumb"><img src="@Model.Image" alt="Image" /><span>Image (mevcut)</span></div>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.CoverImage))
+                            {
+                                <div class="current-thumb"><img src="@Model.CoverImage" alt="CoverImage" /><span>CoverImage (mevcut)</span></div>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.Image2))
+                            {
+                                <div class="current-thumb"><img src="@Model.Image2" alt="Image2" /><span>Image2 (mevcut)</span></div>
+                            }
+                        </div>
+                    }
+
+                    <div class="form-group">
+                        <label asp-for="Image">Kart Görseli (Image)</label>
+                        <input asp-for="Image" oninput="updatePreview()" id="imageInput" />
+                        <span asp-validation-for="Image" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="CoverImage">Kapak Görseli (CoverImage)</label>
+                        <input asp-for="CoverImage" />
+                        <span asp-validation-for="CoverImage" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Image2">İkinci Görsel (Image2)</label>
+                        <input asp-for="Image2" />
+                        <span asp-validation-for="Image2" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-card">
+                    <div class="section-divider"><span class="num">4</span> <span>Detay Sayfası İçeriği</span></div>
+
+                    <div class="form-group">
+                        <label asp-for="Details1">Tur Programı - Bölüm 1</label>
+                        <textarea asp-for="Details1"></textarea>
+                        <span asp-validation-for="Details1" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Details2">Tur Programı - Bölüm 2</label>
+                        <textarea asp-for="Details2"></textarea>
+                        <span asp-validation-for="Details2" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SAĞ: Önizleme + Durum -->
+            <div>
+                <div class="preview-card">
+                    <div class="preview-label">Canlı Önizleme</div>
+                    <div class="preview-img-box" id="previewImgBox">
+                        @if (!string.IsNullOrEmpty(Model.Image))
+                        {
+                            <img src="@Model.Image" alt="@Model.City" />
+                        }
+                        else
+                        {
+                            <i class="fa fa-picture-o" aria-hidden="true"></i>
+                        }
+                    </div>
+                    <div class="preview-body">
+                        <h5 id="previewCity">@Model.City</h5>
+                        <p id="previewDayNight">@Model.DayNight</p>
+                        <div class="preview-meta">
+                            <div class="price" id="previewPrice">₺@Model.Price</div>
+                            <div class="cap"><i class="fa fa-users" aria-hidden="true"></i> <span id="previewCapacity">@Model.Capacity</span> kişi</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="status-box">
+                    <h6>Yayın Durumu</h6>
+                    <div class="status-toggle-row">
+                        <span class="status-text">Bu destinasyon sitede görünsün mü?</span>
+                        <label class="switch">
+                            <input type="checkbox" asp-for="Status" />
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-footer">
+            <a asp-area="Admin" asp-controller="Destination" asp-action="Index" class="cancel-btn">Vazgeç</a>
+            <button type="submit" class="save-btn"><i class="fa fa-check mr-1" aria-hidden="true"></i> Değişiklikleri Kaydet</button>
+        </div>
+    </form>
+</div>
+
+@section Script {
+    <script>
+        function updatePreview() {
+            const city = document.getElementById('City').value;
+            const dayNight = document.getElementById('DayNight').value;
+            const price = document.getElementById('Price').value;
+            const capacity = document.getElementById('Capacity').value;
+            const image = document.getElementById('imageInput').value;
+
+            document.getElementById('previewCity').textContent = city;
+            document.getElementById('previewDayNight').textContent = dayNight;
+            document.getElementById('previewPrice').textContent = '₺' + price;
+            document.getElementById('previewCapacity').textContent = capacity;
+
+            const imgBox = document.getElementById('previewImgBox');
+            if (image) {
+                imgBox.innerHTML = '<img src="' + image + '" alt="preview" onerror="this.style.display=\'none\'" />';
+            } else {
+                imgBox.innerHTML = '<i class="fa fa-picture-o" aria-hidden="true"></i>';
+            }
+        }
+    </script>
+}

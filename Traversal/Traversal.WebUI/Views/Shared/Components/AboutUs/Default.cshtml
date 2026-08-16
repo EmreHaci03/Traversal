@@ -1,0 +1,156 @@
+﻿@model GetAboutDto
+<style>
+    .w3l-cta4 {
+        background: #fff;
+    }
+
+    .about-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 50px;
+        align-items: center;
+    }
+
+    @@media (max-width: 900px) {
+        .about-layout {
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+    }
+
+    .about-img-box {
+        position: relative;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+    }
+
+        .about-img-box img {
+            width: 100%;
+            height: 460px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s ease;
+        }
+
+        .about-img-box:hover img {
+            transform: scale(1.05);
+        }
+
+        .about-img-box::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.15), transparent 40%);
+        }
+
+    .about-badge {
+        position: absolute;
+        bottom: 24px;
+        left: 24px;
+        background: rgba(255,255,255,0.95);
+        backdrop-filter: blur(4px);
+        padding: 16px 22px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    }
+
+        .about-badge .icon {
+            width: 42px;
+            height: 42px;
+            background: #e67e22;
+            color: #fff;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .about-badge .num {
+            font-size: 20px;
+            font-weight: 800;
+            color: #1a1a1a;
+            line-height: 1;
+        }
+
+        .about-badge .label {
+            font-size: 11.5px;
+            color: #888;
+            margin-top: 2px;
+        }
+
+    .about-content .sub-title {
+        color: #e67e22;
+        font-weight: 700;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-bottom: 10px;
+    }
+
+    .about-content .hny-title {
+        font-size: 36px;
+        font-weight: 800;
+        color: #1a1a1a;
+        line-height: 1.25;
+        margin-bottom: 20px;
+    }
+
+    .about-content p {
+        font-size: 15.5px;
+        color: #666;
+        line-height: 1.85;
+        margin-bottom: 28px;
+    }
+
+    .about-content .btn-style {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: #e67e22;
+        color: #fff;
+        text-decoration: none;
+        padding: 15px 36px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 14.5px;
+        transition: 0.25s;
+    }
+
+        .about-content .btn-style:hover {
+            background: #cf6c14;
+            color: #fff;
+            transform: translateX(4px);
+        }
+</style>
+
+<section class="w3l-cta4 py-5">
+    <div class="container py-lg-5">
+        <div class="about-layout">
+            <div class="about-img-box">
+                <img src="@Model.Image" alt="@Model.Title" />
+                <div class="about-badge">
+                    <div class="icon"><i class="fa fa-globe" aria-hidden="true"></i></div>
+                    <div>
+                        <div class="num">10+</div>
+                        <div class="label">Yıllık Deneyim</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-content">
+                <h6 class="sub-title">Hakkımızda</h6>
+                <h3 class="hny-title">@Model.Title</h3>
+                <p>@Model.Description</p>
+                <a href="/About/Index/" class="btn-style">
+                    Daha Fazlası İçin <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

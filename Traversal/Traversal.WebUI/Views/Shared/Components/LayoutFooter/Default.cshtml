@@ -1,0 +1,116 @@
+﻿<footer>
+    <section class="w3l-footer">
+        <div class="w3l-footer-16-main py-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 column">
+                        <div class="row">
+                            <div class="col-md-4 column">
+                                <h3>Şirket</h3>
+                                <ul class="footer-gd-16">
+                                    <li><a href="/Default/Index/">Anasayfa</a></li>
+                                    <li><a href="/About/Index/">Hakkımızda</a></li>
+                                    <li><a href="/Destination/Index/">Rotalarımız</a></li>
+                                    <li><a href="blog.html">Blog</a></li>
+                                    <li><a href="contact.html">İletişim</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-md-4 column mt-md-0 mt-4">
+                                <h3>Faydalı Bağlantılar</h3>
+                                <ul class="footer-gd-16">
+                                    <li><a href="#url">Sıkça Sorulan Sorular</a></li>
+                                    <li><a href="#url">Şubelerimiz</a></li>
+                                    <li><a href="#url">Son Medya</a></li>
+                                    <li><a href="about.html">Şirket Hakkında</a></li>
+                                    <li><a href="#url">Paketlerimiz</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-md-4 column mt-md-0 mt-4">
+                                <h3>Hizmetlerimiz</h3>
+                                <ul class="footer-gd-16">
+                                    <li><a href="#url">Gizlilik Politikası</a></li>
+                                    <li><a href="#url">Kullanım Şartlarımız</a></li>
+                                    <li><a href="services.html">Hizmetlerimiz</a></li>
+                                    <li><a href="landing-single.html">Karşılama Sayfası</a></li>
+                                    <li><a href="#url">Rehberlerimiz</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12 column pl-lg-5 column4 mt-lg-0 mt-5">
+                        <h3>Bülten</h3>
+                        <div class="end-column">
+                            <h4>Son güncellemeleri ve fırsatları kaçırmayın.</h4>
+                            <form asp-controller="Newsletter" asp-action="CreateNewsletter" class="subscribe" method="post">
+                                <input type="email" name="Mail" placeholder="E-posta Adresi" required="">
+                                <button type="submit">Gönder</button>
+                            </form>
+                            <p>En son haberlerimiz ve makalelerimiz için abone olun. Size spam e-posta göndermeyeceğiz.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex below-section justify-content-between align-items-center pt-4 mt-5">
+                    <div class="columns text-lg-left text-center">
+                        <p>
+                            &copy; 2020 Traversal. Tüm hakları saklıdır. Tasarım: <a href="https://w3layouts.com/" target="_blank">
+                            W3Layouts
+                        </a>
+                    </p>
+                </div>
+                <div class="columns-2 mt-lg-0 mt-3">
+                    <ul class="social">
+                        <li>
+                            <a href="#facebook"><span class="fa fa-facebook" aria-hidden="true"></span></a>
+                        </li>
+                        <li>
+                            <a href="#linkedin"><span class="fa fa-linkedin" aria-hidden="true"></span></a>
+                        </li>
+                        <li>
+                            <a href="#twitter"><span class="fa fa-twitter" aria-hidden="true"></span></a>
+                        </li>
+                        <li>
+                            <a href="#google"><span class="fa fa-google-plus" aria-hidden="true"></span></a>
+                        </li>
+                        <li>
+                            <a href="#github"><span class="fa fa-github" aria-hidden="true"></span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- move top -->
+    <button onclick="topFunction()" id="movetop" title="Yukarı çık">
+        <span class="fa fa-angle-up"></span>
+    </button>
+    <script>
+                // Kullanıcı sayfanın en üstünden 20px aşağı kaydırdığında butonu göster
+                window.onscroll = function() {
+                    scrollFunction()
+                };
+
+                function scrollFunction() {
+                    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                        document.getElementById("movetop").style.display = "block";
+                    } else {
+                        document.getElementById("movetop").style.display = "none";
+                    }
+                }
+
+                // Kullanıcı butona tıkladığında sayfanın en üstüne kaydır
+                function topFunction() {
+                    document.body.scrollTop = 0;
+                    document.documentElement.scrollTop = 0;
+                }
+    </script>
+    <!-- //move top -->
+    <script>
+                $(function() {
+                    $('.navbar-toggler').click(function() {
+                        $('body').toggleClass('noscroll');
+                    })
+                });
+    </script>
+</section>
+</footer>

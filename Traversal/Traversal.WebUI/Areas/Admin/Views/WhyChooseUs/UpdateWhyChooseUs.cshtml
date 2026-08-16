@@ -1,0 +1,290 @@
+﻿@model UpdateWhyChooseUsDto
+@{
+    ViewData["Title"] = "Madde Güncelle";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<style>
+    .col-lg-12 {
+        width: 100%;
+    }
+
+    .page-header-row {
+        margin-bottom: 24px;
+    }
+
+        .page-header-row h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .page-header-row p {
+            font-size: 13.5px;
+            color: #888;
+            margin-top: 4px;
+        }
+
+    .form-layout {
+        display: grid;
+        grid-template-columns: 2.2fr 1fr;
+        gap: 24px;
+        align-items: start;
+    }
+
+    @@media (max-width: 950px) {
+        .form-layout {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .form-card {
+        background: #fff;
+        border-radius: 16px;
+        padding: 32px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+
+    .section-divider {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 4px 0 22px;
+    }
+
+        .section-divider .num {
+            width: 24px;
+            height: 24px;
+            background: #e67e22;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .section-divider span {
+            font-size: 12.5px;
+            font-weight: 700;
+            color: #cf6c14;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #555;
+            display: block;
+            margin-bottom: 7px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #e5e5e5;
+            border-radius: 10px;
+            font-size: 14.5px;
+        }
+
+            .form-group input:focus,
+            .form-group textarea:focus {
+                outline: none;
+                border-color: #e67e22;
+                box-shadow: 0 0 0 3px rgba(230,126,34,0.1);
+            }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 140px;
+        }
+
+    .preview-card {
+        background: #fff;
+        border-radius: 16px;
+        padding: 24px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        position: sticky;
+        top: 20px;
+    }
+
+        .preview-card .preview-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: #aaa;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 18px;
+        }
+
+    .preview-item {
+        display: flex;
+        gap: 14px;
+        align-items: flex-start;
+    }
+
+    .preview-icon {
+        width: 42px;
+        height: 42px;
+        background: #fff3e6;
+        color: #e67e22;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 17px;
+        flex-shrink: 0;
+    }
+
+    .preview-item h6 {
+        font-size: 14.5px;
+        font-weight: 700;
+        color: #1a1a1a;
+        margin-bottom: 4px;
+    }
+
+    .preview-item p {
+        font-size: 12.5px;
+        color: #999;
+        line-height: 1.6;
+    }
+
+    .tips-box {
+        background: #fff9f2;
+        border: 1px dashed #f0d4b8;
+        border-radius: 14px;
+        padding: 18px 20px;
+        margin-top: 20px;
+    }
+
+        .tips-box h6 {
+            font-size: 13px;
+            font-weight: 700;
+            color: #cf6c14;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tips-box p {
+            font-size: 12.5px;
+            color: #a06a3a;
+            line-height: 1.6;
+        }
+
+    .form-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        margin-top: 24px;
+        padding-top: 22px;
+        border-top: 1px solid #f0f0f0;
+    }
+
+    .save-btn {
+        background: #e67e22;
+        color: #fff;
+        border: none;
+        padding: 13px 34px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 14.5px;
+        cursor: pointer;
+    }
+
+        .save-btn:hover {
+            background: #cf6c14;
+        }
+
+    .cancel-btn {
+        background: #fff;
+        color: #888;
+        border: 1px solid #e0e0e0;
+        padding: 13px 28px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 14.5px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+    }
+
+        .cancel-btn:hover {
+            background: #f5f5f5;
+        }
+</style>
+
+<div class="col-lg-12">
+    <div class="page-header-row">
+        <h3>Madde Güncelle</h3>
+        <p>Mevcut "Neden Biz" maddesini düzenleyin.</p>
+    </div>
+
+    <form asp-area="Admin" asp-controller="WhyChooseUs" asp-action="UpdateWhyChooseUs" method="post">
+        <div asp-validation-summary="All" class="text-danger mb-3"></div>
+        <input type="hidden" asp-for="WhyChooseUsId" />
+
+        <div class="form-layout">
+            <div class="form-card">
+                <div class="section-divider"><span class="num">1</span> <span>Madde Bilgileri</span></div>
+
+                <div class="form-group">
+                    <label asp-for="Title">Başlık</label>
+                    <input asp-for="Title" oninput="updatePreview()" id="titleInput" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Description">Açıklama</label>
+                    <textarea asp-for="Description" oninput="updatePreview()" id="descInput"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="form-footer">
+                    <a asp-area="Admin" asp-controller="WhyChooseUs" asp-action="Index" class="cancel-btn">Vazgeç</a>
+                    <button type="submit" class="save-btn"><i class="fa fa-check mr-1" aria-hidden="true"></i> Değişiklikleri Kaydet</button>
+                </div>
+            </div>
+
+            <div>
+                <div class="preview-card">
+                    <div class="preview-label">Canlı Önizleme</div>
+                    <div class="preview-item">
+                        <div class="preview-icon"><i class="fa fa-check" aria-hidden="true"></i></div>
+                        <div>
+                            <h6 id="previewTitle">@Model.Title</h6>
+                            <p id="previewDesc">@Model.Description</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tips-box">
+                    <h6><i class="fa fa-lightbulb-o" aria-hidden="true"></i> İpucu</h6>
+                    <p>Başlığı kısa ve net tutun. Açıklama, kullanıcıya güven vermelidir.</p>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Script {
+    <script>
+        function updatePreview() {
+            const title = document.getElementById('titleInput').value || 'Başlık';
+            const desc = document.getElementById('descInput').value || 'Açıklama burada görünecek...';
+            document.getElementById('previewTitle').textContent = title;
+            document.getElementById('previewDesc').textContent = desc;
+        }
+    </script>
+}

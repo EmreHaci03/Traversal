@@ -1,0 +1,531 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Yönetim Paneli - Traversal</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f1f2f6;
+            color: #333;
+        }
+
+        .layout-wrapper {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 270px;
+            background: #14161f;
+            color: #fff;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+        }
+
+            .sidebar .logo {
+                padding: 22px 22px;
+                font-size: 21px;
+                font-weight: 700;
+                border-bottom: 1px solid #262837;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+                .sidebar .logo span {
+                    color: #e67e22;
+                }
+
+                .sidebar .logo .badge-admin {
+                    font-size: 10px;
+                    background: #e67e22;
+                    padding: 2px 8px;
+                    border-radius: 20px;
+                    font-weight: 600;
+                    margin-left: auto;
+                }
+
+        .sidebar-scroll {
+            flex: 1;
+            overflow-y: auto;
+            padding: 14px 0;
+        }
+
+            .sidebar-scroll::-webkit-scrollbar {
+                width: 5px;
+            }
+
+            .sidebar-scroll::-webkit-scrollbar-thumb {
+                background: #2a2c3d;
+                border-radius: 10px;
+            }
+
+        .nav-section-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #565a70;
+            padding: 16px 22px 8px;
+            font-weight: 700;
+        }
+
+        .sidebar nav a, .sidebar .menu-toggle {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 11px 22px;
+            color: #a7abc0;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+
+            .sidebar nav a i, .sidebar .menu-toggle i:first-child {
+                width: 18px;
+                text-align: center;
+                font-size: 14.5px;
+            }
+
+            .sidebar nav a:hover, .sidebar nav a.active, .sidebar .menu-toggle:hover {
+                background: #1e2030;
+                color: #fff;
+                border-left: 3px solid #e67e22;
+                padding-left: 19px;
+            }
+
+        .has-submenu > .menu-toggle {
+            display: flex;
+            justify-content: space-between;
+        }
+
+            .has-submenu > .menu-toggle .left {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+
+            .has-submenu > .menu-toggle .chevron {
+                font-size: 10px;
+                transition: transform 0.25s ease;
+            }
+
+        .has-submenu.open > .menu-toggle .chevron {
+            transform: rotate(180deg);
+        }
+
+        .submenu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.25s ease;
+            background: #0e0f17;
+        }
+
+        .has-submenu.open .submenu {
+            max-height: 400px;
+        }
+
+        .submenu a {
+            padding: 9px 22px 9px 50px !important;
+            font-size: 13px !important;
+            color: #7d8199 !important;
+        }
+
+            .submenu a:hover, .submenu a.active {
+                color: #fff !important;
+                border-left: 3px solid #e67e22 !important;
+                padding-left: 47px !important;
+            }
+
+        .sidebar .logout-box {
+            padding: 16px 22px;
+            border-top: 1px solid #262837;
+        }
+
+            .sidebar .logout-box button {
+                width: 100%;
+                background: transparent;
+                border: 1px solid #33364a;
+                color: #a7abc0;
+                padding: 10px;
+                border-radius: 8px;
+                cursor: pointer;
+                font-size: 13.5px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+            }
+
+                .sidebar .logout-box button:hover {
+                    background: #c0392b;
+                    border-color: #c0392b;
+                    color: #fff;
+                }
+
+        /* Main content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+
+        /* Topbar */
+        .topbar {
+            background: #fff;
+            padding: 14px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+            .topbar .left-side {
+                display: flex;
+                align-items: center;
+                gap: 20px;
+            }
+
+            .topbar h4 {
+                font-size: 17px;
+                font-weight: 700;
+                color: #1a1a1a;
+            }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #f4f5f9;
+            border-radius: 9px;
+            padding: 9px 14px;
+            width: 260px;
+        }
+
+            .search-box input {
+                border: none;
+                background: transparent;
+                outline: none;
+                font-size: 13.5px;
+                flex: 1;
+            }
+
+            .search-box i {
+                color: #999;
+                font-size: 13px;
+            }
+
+        .topbar .right-side {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .icon-btn {
+            position: relative;
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: #f4f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #555;
+            font-size: 15px;
+            cursor: pointer;
+            border: none;
+        }
+
+            .icon-btn .dot {
+                position: absolute;
+                top: 7px;
+                right: 8px;
+                width: 7px;
+                height: 7px;
+                border-radius: 50%;
+                background: #e74c3c;
+                border: 2px solid #fff;
+            }
+
+        .topbar .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+            .topbar .user-info .avatar {
+                width: 38px;
+                height: 38px;
+                border-radius: 50%;
+                background: #1a1d29;
+                color: #e67e22;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: 700;
+                font-size: 14px;
+            }
+
+            .topbar .user-info .name {
+                font-size: 13.5px;
+                font-weight: 600;
+                color: #1a1a1a;
+            }
+
+            .topbar .user-info .role {
+                font-size: 11px;
+                color: #e67e22;
+                font-weight: 600;
+            }
+
+        /* Content area */
+        .page-content {
+            padding: 28px 32px;
+            flex: 1;
+        }
+
+        @@media (max-width: 1100px) {
+            .search-box {
+                display: none;
+            }
+        }
+
+        @@media (max-width: 900px) {
+            .sidebar {
+                width: 72px;
+            }
+
+                .sidebar .logo span:not(.dot-only), .sidebar .logo .badge-admin,
+                .sidebar nav a span, .sidebar .menu-toggle span, .sidebar .logout-box span,
+                .has-submenu .chevron, .submenu {
+                    display: none;
+                }
+
+                .sidebar nav a, .sidebar .menu-toggle {
+                    justify-content: center;
+                    padding: 13px;
+                }
+
+                    .sidebar nav a:hover, .sidebar .menu-toggle:hover {
+                        padding-left: 13px;
+                    }
+
+            .live-nav-link {
+                position: relative;
+            }
+
+                .live-nav-link i {
+                    color: #e67e22;
+                }
+
+                .live-nav-link::after {
+                    content: "";
+                    width: 6px;
+                    height: 6px;
+                    border-radius: 50%;
+                    background: #27ae60;
+                    margin-left: auto;
+                    animation: livePulse 1.5s infinite;
+                }
+            @@keyframes livePulse {
+                0%
+
+        {
+            opacity: 1;
+            box-shadow: 0 0 0 0 rgba(39, 174, 96, 0.5);
+        }
+
+        70% {
+            opacity: 0.6;
+            box-shadow: 0 0 0 6px rgba(39, 174, 96, 0);
+        }
+
+        100% {
+            opacity: 1;
+            box-shadow: 0 0 0 0 rgba(39, 174, 96, 0);
+        }
+
+        }
+        }
+    </style>
+</head>
+<body>
+    <div class="layout-wrapper">
+        <aside class="sidebar">
+            <div class="logo">
+                <span>Traversal</span><span style="color:#fff;">.</span>
+                <span class="badge-admin">ADMIN</span>
+            </div>
+
+            <div class="sidebar-scroll">
+                <nav>
+                    <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="active">
+                        <i class="fa fa-th-large"></i> <span>Kontrol Paneli</span>
+                    </a>
+
+                    <div class="nav-section-title">İçerik Yönetimi</div>
+
+                    <a class="nav-link" asp-controller="Default" asp-action="Index">
+                        <i class="fa fa-id-badge"></i> <span>Siteye Git</span>
+                    </a>
+
+                    <a asp-area="Admin" asp-controller="Destination" asp-action="DestinationList">
+                        <i class="fa fa-map-marker"></i> <span>Destinasyonlar</span>
+                    </a>
+
+                    <a asp-area="Admin" asp-controller="Statistic" asp-action="Index" class="live-nav-link">
+                        <i class="fa fa-bolt"></i> <span>Anlık Veriler</span>
+                    </a>
+                    <a asp-area="" asp-controller="Default" asp-action="Index">
+                        <i class="fa fa-id-badge"></i> <span>Siteye Git</span>
+                    </a>
+
+                    <div class="has-submenu">
+                        <div class="menu-toggle" onclick="toggleSubmenu(this)">
+                            <span class="left"><i class="fa fa-picture-o"></i> <span>Vitrin İçerikleri</span></span>
+                            <i class="fa fa-angle-down chevron"></i>
+                        </div>
+                        <div class="submenu">
+                            <a asp-area="Admin" asp-controller="FeatureMain" asp-action="Index">Öne Çıkan (Ana)</a>
+                            <a asp-area="Admin" asp-controller="FeatureGrid" asp-action="Index">Öne Çıkan (Izgara)</a>
+                            <a asp-area="Admin" asp-controller="InfoCard" asp-action="Index">Bilgi Kartları</a>
+                        </div>
+                    </div>
+
+                    <a asp-area="Admin" asp-controller="InfoCard" asp-action="Index">
+                        <i class="fa fa-th-large"></i> <span>Bilgi Kartları</span>
+                    </a>
+                     <a asp-area="Admin" asp-controller="Guide" asp-action="GuideList">
+                            <i class="fa fa-id-badge"></i> <span>Rehberlerimiz</span>
+                     </a>
+                    <a asp-area="Admin" asp-controller="About" asp-action="AboutList">
+                        <i class="fa fa-info-circle"></i> <span>Hakkımızda</span>
+                    </a>
+                    <a asp-area="Admin" asp-controller="WhyChooseUs" asp-action="Index">
+                        <i class="fa fa-check-circle"></i> <span>Neden Biz</span>
+                    </a>
+
+                    <div class="nav-section-title">Kullanıcı Etkileşimi</div>
+
+                    <a asp-area="Admin" asp-controller="Comment" asp-action="CommentList">
+                        <i class="fa fa-comments"></i> <span>Yorumlar</span>
+                    </a>
+                    <a asp-area="Admin" asp-controller="Testimonial" asp-action="TestimonialList">
+                        <i class="fa fa-quote-left"></i> <span>Referanslar</span>
+                    </a>
+                    <div class="has-submenu">
+                        <div class="menu-toggle" onclick="toggleSubmenu(this)">
+                            <span class="left"><i class="fa fa-envelope"></i> <span>Mesajlar</span></span>
+                            <i class="fa fa-angle-down chevron"></i>
+                        </div>
+                        <div class="submenu">
+                            <a asp-area="Admin" asp-controller="Message" asp-action="MessageList">Tüm Mesajlar</a>
+                            <a asp-area="Admin" asp-controller="Message" asp-action="ReadMessages">Okunan Mesajlar</a>
+                            <a asp-area="Admin" asp-controller="Message" asp-action="UnReadMessages">Okunmayan Mesajlar</a>
+                        </div>
+                    </div>
+                    <a asp-area="Admin" asp-controller="Newsletter" asp-action="Index">
+                        <i class="fa fa-paper-plane"></i> <span>Bülten Aboneleri</span>
+                    </a>
+
+                    <div class="nav-section-title">Rezervasyon &amp; Satış</div>
+
+                    <div class="has-submenu">
+                        <div class="menu-toggle" onclick="toggleSubmenu(this)">
+                            <span class="left"><i class="fa fa-calendar-check-o"></i> <span>Rezervasyonlar</span></span>
+                            <i class="fa fa-angle-down chevron"></i>
+                        </div>
+                        <div class="submenu">
+                            <a asp-area="Admin" asp-controller="Reservation" asp-action="ReservationList">Reservasyonlar</a>
+                        </div>
+                    </div>
+
+                    <div class="nav-section-title">Sistem</div>
+
+                    <a asp-area="Admin" asp-controller="User" asp-action="Index">
+                        <i class="fa fa-users"></i> <span>Kullanıcılar</span>
+                    </a>
+                    <a asp-area="Admin" asp-controller="Role" asp-action="RoleList">
+                        <i class="fa fa-shield"></i> <span>Roller</span>
+                    </a>
+                    <a asp-area="Admin" asp-controller="Contact" asp-action="ContactList">
+                        <i class="fa fa-address-book"></i> <span>İletişim Bilgileri</span>
+                    </a>
+                </nav>
+            </div>
+
+            <div class="logout-box">
+                <form asp-area="" asp-controller="Account" asp-action="Logout" method="post">
+                    <button type="submit"><i class="fa fa-sign-out"></i> <span>Çıkış Yap</span></button>
+                </form>
+            </div>
+        </aside>
+
+        <div class="main-content">
+            <header class="topbar">
+                <div class="left-side">
+                    <h4>@ViewData["Title"]</h4>
+                    <div class="search-box">
+                        <i class="fa fa-search"></i>
+                        <input type="text" placeholder="Ara..." />
+                    </div>
+                </div>
+
+                <div class="right-side">
+                    <button class="icon-btn" title="Bildirimler">
+                        <i class="fa fa-bell-o"></i>
+                        <span class="dot"></span>
+                    </button>
+                    <button class="icon-btn" title="Mesajlar">
+                        <i class="fa fa-envelope-o"></i>
+                        <span class="dot"></span>
+                    </button>
+
+                    <div class="user-info">
+                        <div class="avatar">@User.Identity.Name?.Substring(0, 1).ToUpper()</div>
+                        <div>
+                            <div class="name">@User.Identity.Name</div>
+                            <div class="role">Yönetici</div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-content">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSubmenu(el) {
+            el.parentElement.classList.toggle('open');
+        }
+    </script>
+
+    @RenderSection("Script", required: false)
+</body>
+</html>

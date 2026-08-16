@@ -1,0 +1,361 @@
+﻿@model List<ResultAppRoleDto>
+@{
+    ViewData["Title"] = "Roller";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<style>
+    .col-lg-12 {
+        width: 100%;
+    }
+
+    .page-header-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+    }
+
+        .page-header-row h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .page-header-row p {
+            font-size: 13.5px;
+            color: #888;
+            margin-top: 4px;
+        }
+
+    .add-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #e67e22;
+        color: #fff;
+        text-decoration: none;
+        padding: 11px 24px;
+        border-radius: 9px;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+        .add-btn:hover {
+            background: #cf6c14;
+            color: #fff;
+        }
+
+    .role-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 20px;
+    }
+
+    .role-card {
+        background: #fff;
+        border-radius: 16px;
+        padding: 24px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+        .role-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        }
+
+    .role-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 14px;
+        background: linear-gradient(135deg,#8e44ad,#a569bd);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        margin-bottom: 16px;
+    }
+
+        .role-icon.admin {
+            background: linear-gradient(135deg,#c0392b,#e74c3c);
+        }
+
+        .role-icon.member {
+            background: linear-gradient(135deg,#2874a6,#3498db);
+        }
+
+    .role-name {
+        font-size: 16px;
+        font-weight: 700;
+        color: #1a1a1a;
+        margin-bottom: 4px;
+    }
+
+    .role-id {
+        font-size: 11.5px;
+        color: #bbb;
+        margin-bottom: 18px;
+        word-break: break-all;
+    }
+
+    .role-actions {
+        display: flex;
+        gap: 8px;
+        padding-top: 16px;
+        border-top: 1px solid #f0f0f0;
+    }
+
+    .action-btn {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 9px;
+        border-radius: 9px;
+        text-decoration: none;
+        font-size: 12.5px;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+    }
+
+        .action-btn.edit {
+            background: #eaf4fd;
+            color: #2874a6;
+        }
+
+            .action-btn.edit:hover {
+                background: #2874a6;
+                color: #fff;
+            }
+
+        .action-btn.delete {
+            background: #fdeaea;
+            color: #c0392b;
+        }
+
+            .action-btn.delete:hover {
+                background: #c0392b;
+                color: #fff;
+            }
+
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        background: #fff;
+        border-radius: 16px;
+    }
+
+        .empty-state i {
+            font-size: 40px;
+            color: #ddd;
+            margin-bottom: 16px;
+        }
+
+        .empty-state p {
+            color: #999;
+            font-size: 14.5px;
+        }
+
+    .alert-success {
+        background: #eafbea;
+        color: #2e7d32;
+        padding: 13px 18px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        font-size: 14px;
+    }
+
+    .alert-danger {
+        background: #fdeaea;
+        color: #c0392b;
+        padding: 13px 18px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        font-size: 14px;
+    }
+
+    /* Modal */
+    .modal-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(20, 22, 31, 0.5);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+    .modal-box {
+        background: #fff;
+        border-radius: 16px;
+        padding: 28px;
+        width: 100%;
+        max-width: 360px;
+        text-align: center;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+    }
+
+    .modal-icon {
+        width: 56px;
+        height: 56px;
+        background: #fdeaea;
+        color: #c0392b;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        margin: 0 auto 16px;
+    }
+
+    .modal-box h5 {
+        font-size: 16px;
+        font-weight: 700;
+        color: #1a1a1a;
+        margin-bottom: 8px;
+    }
+
+    .modal-box p {
+        font-size: 13.5px;
+        color: #888;
+        margin-bottom: 22px;
+    }
+
+    .modal-actions {
+        display: flex;
+        gap: 10px;
+    }
+
+    .modal-btn {
+        flex: 1;
+        padding: 11px;
+        border-radius: 9px;
+        font-weight: 600;
+        font-size: 13.5px;
+        cursor: pointer;
+        border: none;
+    }
+
+        .modal-btn.cancel {
+            background: #f5f5f5;
+            color: #666;
+        }
+
+            .modal-btn.cancel:hover {
+                background: #ececec;
+            }
+
+        .modal-btn.confirm {
+            background: #c0392b;
+            color: #fff;
+        }
+
+            .modal-btn.confirm:hover {
+                background: #a5301f;
+            }
+</style>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert-success"><i class="fa fa-check-circle mr-1" aria-hidden="true"></i> @TempData["Success"]</div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert-danger"><i class="fa fa-exclamation-circle mr-1" aria-hidden="true"></i> @TempData["Error"]</div>
+}
+
+<div class="col-lg-12">
+    <div class="page-header-row">
+        <div>
+            <h3>Roller</h3>
+            <p>Sistemdeki kullanıcı rollerini buradan yönetebilirsiniz.</p>
+        </div>
+        <a asp-area="Admin" asp-controller="Role" asp-action="CreateRole" class="add-btn">
+            <i class="fa fa-plus" aria-hidden="true"></i> Yeni Rol
+        </a>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="role-grid">
+            @foreach (var item in Model)
+            {
+                var iconClass = item.Name?.ToLower() switch
+                {
+                    "admin" => "admin",
+                    "member" => "member",
+                    _ => ""
+                };
+
+                <div class="role-card">
+                    <div class="role-icon @iconClass">
+                        <i class="fa fa-shield" aria-hidden="true"></i>
+                    </div>
+                    <div class="role-name">@item.Name</div>
+                    <div class="role-id">ID: @item.Id</div>
+
+                    <div class="role-actions">
+                        <a asp-area="Admin" asp-controller="Role" asp-action="UpdateRole" asp-route-id="@item.Id" class="action-btn edit">
+                            <i class="fa fa-pencil" aria-hidden="true"></i> Düzenle
+                        </a>
+                        <form asp-area="Admin" asp-controller="Role" asp-action="DeleteRole" method="post" class="delete-form" data-name="@item.Name" style="flex:1;">
+                            <input type="hidden" name="id" value="@item.Id" />
+                            <button type="button" class="action-btn delete" onclick="openDeleteModal(this)" style="width:100%;">
+                                <i class="fa fa-trash" aria-hidden="true"></i> Sil
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="empty-state">
+            <i class="fa fa-shield" aria-hidden="true"></i>
+            <p>Henüz rol tanımlanmamış.</p>
+        </div>
+    }
+</div>
+
+<div class="modal-overlay" id="deleteModal">
+    <div class="modal-box">
+        <div class="modal-icon"><i class="fa fa-trash" aria-hidden="true"></i></div>
+        <h5>Rolü Sil</h5>
+        <p><span id="deleteModalName"></span> rolü silinecek. Bu işlem geri alınamaz.</p>
+        <div class="modal-actions">
+            <button type="button" class="modal-btn cancel" onclick="closeDeleteModal()">Vazgeç</button>
+            <button type="button" class="modal-btn confirm" onclick="confirmDelete()">Evet, Sil</button>
+        </div>
+    </div>
+</div>
+
+@section Script {
+    <script>
+        let formToDelete = null;
+
+        function openDeleteModal(btn) {
+            formToDelete = btn.closest('form');
+            document.getElementById('deleteModalName').textContent = formToDelete.dataset.name;
+            document.getElementById('deleteModal').classList.add('active');
+        }
+
+        function closeDeleteModal() {
+            document.getElementById('deleteModal').classList.remove('active');
+            formToDelete = null;
+        }
+
+        function confirmDelete() {
+            if (formToDelete) {
+                formToDelete.submit();
+            }
+        }
+    </script>
+}

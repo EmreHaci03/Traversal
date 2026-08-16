@@ -1,0 +1,20 @@
+﻿
+<!doctype html>
+<html lang="zxx">
+
+   @await Component.InvokeAsync("LayoutHead")
+
+<body>
+
+    @await Component.InvokeAsync("LayoutHeader")
+    @RenderSection("Script", required: false)
+
+    @RenderBody() 
+
+    @await Component.InvokeAsync("LayoutFooter")
+
+    @await Component.InvokeAsync("LayoutScript")
+
+</body>
+
+</html>

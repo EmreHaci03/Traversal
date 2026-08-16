@@ -1,0 +1,137 @@
+﻿@model CreateReservationDto
+@{
+    ViewData["Title"] = "Rezervasyon Oluştur";
+    Layout = "~/Areas/Member/Views/Shared/_MemberLayout.cshtml";
+}
+<style>
+    .col-lg-12 {
+        width: 100%;
+    }
+
+    .reservation-card {
+        background: #fff;
+        border-radius: 16px;
+        padding: 40px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        width: 100%;
+    }
+
+        .reservation-card .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+        }
+
+        .reservation-card .section-subtitle {
+            font-size: 13.5px;
+            color: #888;
+            margin-bottom: 32px;
+        }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+    }
+
+    @@media (max-width: 700px) {
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .form-group {
+        margin-bottom: 24px;
+    }
+
+        .form-group label {
+            font-size: 13.5px;
+            font-weight: 600;
+            color: #555;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 13px 16px;
+            border: 1px solid #e5e5e5;
+            border-radius: 10px;
+            font-size: 15px;
+        }
+
+            .form-group input:focus,
+            .form-group select:focus {
+                outline: none;
+                border-color: #e67e22;
+                box-shadow: 0 0 0 3px rgba(230,126,34,0.1);
+            }
+
+            .form-group input[readonly] {
+                background: #f7f7f8;
+                color: #999;
+            }
+
+    .form-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        margin-top: 12px;
+        padding-top: 24px;
+        border-top: 1px solid #f0f0f0;
+    }
+
+    .save-btn {
+        background: #e67e22;
+        color: #fff;
+        border: none;
+        padding: 14px 40px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 15px;
+        cursor: pointer;
+        transition: background 0.25s ease;
+    }
+
+        .save-btn:hover {
+            background: #cf6c14;
+        }
+</style>
+
+<div class="col-lg-12">
+    <div class="reservation-card">
+        <div class="section-title">Rezervasyon Oluştur</div>
+        <div class="section-subtitle">Seyahatinizi planlamak için aşağıdaki bilgileri doldurun.</div>
+
+        <form asp-area="Member" asp-controller="Reservation" asp-action="CreateReservation" method="post">
+            <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+            <div class="form-group">
+                <label asp-for="DestinationCity">Rota</label>
+                <input asp-for="DestinationCity" readonly />
+            </div>
+
+            <input type="hidden" asp-for="DestinationId"/>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="PersonCount">Kişi Sayısı</label>
+                    <input asp-for="PersonCount" type="number" min="1" placeholder="Örn: 2" />
+                    <span asp-validation-for="PersonCount" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="ReservationDate">Rezervasyon Tarihi</label>
+                    <input asp-for="ReservationDate" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                    <span asp-validation-for="ReservationDate" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-footer">
+                <button type="submit" class="save-btn"><i class="fa fa-check mr-1" aria-hidden="true"></i> Rezervasyonu Tamamla</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,499 @@
+﻿@model ProfileViewModel
+@{
+    ViewData["Title"] = "Profilim";
+    Layout = "~/Areas/Member/Views/Shared/_MemberLayout.cshtml";
+}
+<style>
+    .col-lg-12 {
+        width: 100%;
+    }
+
+    .profile-header {
+        background: linear-gradient(135deg, #1a1d29, #2a2e3f);
+        border-radius: 18px;
+        padding: 36px 40px;
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        color: #fff;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .profile-header::after {
+            content: "";
+            position: absolute;
+            right: -60px;
+            top: -60px;
+            width: 220px;
+            height: 220px;
+            background: rgba(230, 126, 34, 0.15);
+            border-radius: 50%;
+        }
+
+        .profile-header .avatar-big {
+            width: 88px;
+            height: 88px;
+            border-radius: 50%;
+            background: #e67e22;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            font-weight: 700;
+            flex-shrink: 0;
+            z-index: 1;
+            border: 3px solid rgba(255,255,255,0.15);
+            overflow: hidden;
+        }
+
+            .profile-header .avatar-big img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+        .profile-header .info {
+            z-index: 1;
+        }
+
+        .profile-header h4 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .profile-header p {
+            color: #b8bcc8;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .profile-header .badge-verified {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(230, 126, 34, 0.15);
+            color: #f0a860;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 5px 12px;
+            border-radius: 20px;
+            margin-top: 10px;
+            width: fit-content;
+        }
+
+    .quick-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 16px;
+        margin-bottom: 24px;
+    }
+
+        .quick-stats .stat-mini {
+            background: #fff;
+            border-radius: 12px;
+            padding: 18px 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+            .quick-stats .stat-mini .icon-mini {
+                width: 40px;
+                height: 40px;
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 17px;
+                color: #fff;
+                flex-shrink: 0;
+            }
+
+        .quick-stats .value-mini {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .quick-stats .label-mini {
+            font-size: 12.5px;
+            color: #888;
+        }
+
+    .profile-card {
+        background: #fff;
+        border-radius: 16px;
+        padding: 36px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+        .profile-card .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+        }
+
+        .profile-card .section-subtitle {
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 24px;
+        }
+
+    /* Resim yükleme kartı */
+    .photo-card {
+        background: linear-gradient(135deg, #fff9f2, #fff);
+        border: 2px dashed #f0d4b8;
+        border-radius: 18px;
+        padding: 32px;
+        transition: border-color 0.25s ease, background 0.25s ease;
+    }
+
+        .photo-card:hover {
+            border-color: #e67e22;
+        }
+
+    .photo-upload-row {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+    }
+
+    .photo-preview-wrap {
+        position: relative;
+        flex-shrink: 0;
+    }
+
+    .current-photo {
+        width: 110px;
+        height: 110px;
+        border-radius: 50%;
+        overflow: hidden;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 3px solid #fff;
+        box-shadow: 0 8px 24px rgba(230,126,34,0.2);
+    }
+
+        .current-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .current-photo i {
+            font-size: 36px;
+            color: #e0c6a8;
+        }
+
+    .photo-preview-wrap .camera-badge {
+        position: absolute;
+        bottom: 2px;
+        right: 2px;
+        width: 34px;
+        height: 34px;
+        background: #e67e22;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 14px;
+        border: 3px solid #fff;
+        box-shadow: 0 4px 10px rgba(230,126,34,0.4);
+    }
+
+    .upload-controls {
+        flex: 1;
+    }
+
+        .upload-controls .upload-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+        }
+
+        .upload-controls .upload-desc {
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 16px;
+        }
+
+    .file-input-wrapper {
+        position: relative;
+        display: inline-block;
+        width: 100%;
+        max-width: 280px;
+    }
+
+        .file-input-wrapper input[type="file"] {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+
+    .file-input-label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        background: #fff;
+        border: 1.5px solid #e67e22;
+        color: #e67e22;
+        font-size: 13.5px;
+        font-weight: 600;
+        padding: 11px 20px;
+        border-radius: 9px;
+        transition: all 0.25s ease;
+    }
+
+    .file-input-wrapper:hover .file-input-label {
+        background: #e67e22;
+        color: #fff;
+    }
+
+    .upload-hint {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 12px;
+        color: #aaa;
+        margin-top: 10px;
+    }
+
+        .upload-hint i {
+            color: #ccc;
+        }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    @@media (max-width: 700px) {
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+
+        .photo-upload-row {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .file-input-wrapper {
+            max-width: 100%;
+        }
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+        .form-group label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #555;
+            display: block;
+            margin-bottom: 7px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #e5e5e5;
+            border-radius: 9px;
+            font-size: 14.5px;
+            transition: border-color 0.2s ease;
+        }
+
+            .form-group input:focus {
+                outline: none;
+                border-color: #e67e22;
+                box-shadow: 0 0 0 3px rgba(230,126,34,0.1);
+            }
+
+            .form-group input[readonly] {
+                background: #f7f7f8;
+                color: #999;
+                cursor: not-allowed;
+            }
+
+    .form-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        margin-top: 8px;
+        padding-top: 20px;
+        border-top: 1px solid #f0f0f0;
+    }
+
+    .save-btn {
+        background: #e67e22;
+        color: #fff;
+        border: none;
+        padding: 12px 32px;
+        border-radius: 9px;
+        font-weight: 600;
+        font-size: 14.5px;
+        cursor: pointer;
+        transition: background 0.25s ease;
+    }
+
+        .save-btn:hover {
+            background: #cf6c14;
+        }
+
+    .alert-success {
+        background: #eafbea;
+        color: #2e7d32;
+        padding: 13px 18px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+</style>
+
+
+<div class="col-lg-12">
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert-success"><i class="fa fa-check-circle" aria-hidden="true"></i> @TempData["Success"]</div>
+    }
+
+    <div class="profile-header">
+        <div class="avatar-big">
+            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+            {
+                <img src="/userimages/@Model.ImageUrl" alt="@Model.Name" />
+            }
+            else
+            {
+                @($"{Model.Name?.Substring(0, 1).ToUpper()}{Model.Surname?.Substring(0, 1).ToUpper()}")
+            }
+        </div>
+        <div class="info">
+            <h4>@Model.Name @Model.Surname</h4>
+            <p><i class="fa fa-envelope-o" aria-hidden="true"></i> @Model.Email</p>
+            <div class="badge-verified"><i class="fa fa-shield" aria-hidden="true"></i> Doğrulanmış Üye</div>
+        </div>
+    </div>
+
+    <div class="quick-stats">
+        <div class="stat-mini">
+            <div class="icon-mini" style="background:#e67e22;"><i class="fa fa-user" aria-hidden="true"></i></div>
+            <div>
+                <div class="value-mini">@ViewBag.ActiveReservationCount</div>
+                <div class="label-mini">Onaylanan Rezervasyonlar</div>
+            </div>
+        </div>
+        <div class="stat-mini">
+            <div class="icon-mini" style="background:#3498db;"><i class="fa fa-comments" aria-hidden="true"></i></div>
+            <div>
+                <div class="value-mini">@ViewBag.CommentCount</div>
+                <div class="label-mini">Yorumlarım</div>
+            </div>
+        </div>
+        <div class="stat-mini">
+            <div class="icon-mini" style="background:#e74c3c;"><i class="fa fa-heart" aria-hidden="true"></i></div>
+            <div>
+                <div class="value-mini">@ViewBag.FavoritePlacesCount</div>
+                <div class="label-mini">Favorilerim</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-card photo-card">
+        <div class="section-title">Profil Fotoğrafı</div>
+        <div class="section-subtitle">Fotoğrafınız diğer kullanıcılara yorumlarınızda görünecektir.</div>
+
+        <form asp-area="Member" asp-controller="Profile" asp-action="Index" method="post" enctype="multipart/form-data">
+            <div class="photo-upload-row">
+                <div class="photo-preview-wrap">
+                    <div class="current-photo">
+                        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                        {
+                            <img src="/userimages/@Model.ImageUrl" alt="@Model.Name" />
+                        }
+                        else
+                        {
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                        }
+                    </div>
+                    <div class="camera-badge"><i class="fa fa-camera" aria-hidden="true"></i></div>
+                </div>
+
+                <div class="upload-controls">
+                    <div class="upload-title">Fotoğrafını Güncelle</div>
+                    <div class="upload-desc">Net ve yüzünün göründüğü bir fotoğraf seç.</div>
+
+                    <div class="file-input-wrapper">
+                        <label asp-for="Image" class="file-input-label">
+                            <i class="fa fa-upload" aria-hidden="true"></i> Dosya Seç
+                        </label>
+                        <input asp-for="Image" type="file" accept=".jpg,.jpeg,.png" />
+                    </div>
+
+                    <div class="upload-hint">
+                        <i class="fa fa-info-circle" aria-hidden="true"></i> JPG veya PNG, maksimum 2MB.
+                    </div>
+                    <span asp-validation-for="Image" class="text-danger d-block mt-2"></span>
+                </div>
+            </div>
+                <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="Name">Ad</label>
+                    <input asp-for="Name" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Surname">Soyad</label>
+                    <input asp-for="Surname" />
+                    <span asp-validation-for="Surname" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="UserName">Kullanıcı Adı</label>
+                    <input asp-for="UserName"  />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email">E-posta</label>
+                    <input asp-for="Email" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password">Şifre</label>
+                    <input asp-for="Password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+            </div>
+
+
+            <div class="form-footer">
+                <button type="submit" class="save-btn"><i class="fa fa-check mr-1" aria-hidden="true"></i> Fotoğrafı Kaydet</button>
+            </div>
+        </form>
+    </div>
+
+
+</div>

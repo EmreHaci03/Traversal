@@ -1,0 +1,14 @@
+C:\Users\ersin\source\repos\Traversal\Traversal.EntityLayer\bin\Debug\net6.0\Traversal.EntityLayer.deps.json
+C:\Users\ersin\source\repos\Traversal\Traversal.EntityLayer\bin\Debug\net6.0\Traversal.EntityLayer.runtimeconfig.json
+C:\Users\ersin\source\repos\Traversal\Traversal.EntityLayer\bin\Debug\net6.0\Traversal.EntityLayer.dll
+C:\Users\ersin\source\repos\Traversal\Traversal.EntityLayer\bin\Debug\net6.0\Traversal.EntityLayer.pdb
+C:\Users\ersin\source\repos\Traversal\Traversal.EntityLayer\obj\Debug\net6.0\Traversal.EntityLayer.csproj.AssemblyReference.cache
+C:\Users\ersin\source\repos\Traversal\Traversal.EntityLayer\obj\Debug\net6.0\Traversal.EntityLayer.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ersin\source\repos\Traversal\Traversal.EntityLayer\obj\Debug\net6.0\Traversal.EntityLayer.AssemblyInfoInputs.cache
+C:\Users\ersin\source\repos\Traversal\Traversal.EntityLayer\obj\Debug\net6.0\Traversal.EntityLayer.AssemblyInfo.cs
+C:\Users\ersin\source\repos\Traversal\Traversal.EntityLayer\obj\Debug\net6.0\Traversal.EntityLayer.csproj.CoreCompileInputs.cache
+C:\Users\ersin\source\repos\Traversal\Traversal.EntityLayer\obj\Debug\net6.0\Traversal.EntityLayer.dll
+C:\Users\ersin\source\repos\Traversal\Traversal.EntityLayer\obj\Debug\net6.0\refint\Traversal.EntityLayer.dll
+C:\Users\ersin\source\repos\Traversal\Traversal.EntityLayer\obj\Debug\net6.0\Traversal.EntityLayer.pdb
+C:\Users\ersin\source\repos\Traversal\Traversal.EntityLayer\obj\Debug\net6.0\Traversal.EntityLayer.genruntimeconfig.cache
+C:\Users\ersin\source\repos\Traversal\Traversal.EntityLayer\obj\Debug\net6.0\ref\Traversal.EntityLayer.dll

@@ -1,0 +1,267 @@
+﻿@model List<ResultDestinationDto>
+@{
+    ViewData["Title"] = "Aktif Tur Rotaları";
+    Layout = "~/Areas/Member/Views/Shared/_MemberLayout.cshtml";
+}
+<style>
+    .page-header-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+    }
+
+        .page-header-row h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .page-header-row p {
+            font-size: 13.5px;
+            color: #888;
+            margin-top: 4px;
+        }
+
+    .tour-count-badge {
+        background: #fff3e6;
+        color: #e67e22;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 8px 16px;
+        border-radius: 20px;
+    }
+
+    .tour-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+    }
+
+    .tour-card {
+        background: #fff;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+        .tour-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.1);
+        }
+
+        .tour-card .tour-img {
+            position: relative;
+            height: 170px;
+            overflow: hidden;
+        }
+
+            .tour-card .tour-img img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+        .tour-card .status-badge {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            background: #27ae60;
+            color: #fff;
+            font-size: 11.5px;
+            font-weight: 600;
+            padding: 5px 12px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+            .tour-card .status-badge .dot {
+                width: 6px;
+                height: 6px;
+                background: #fff;
+                border-radius: 50%;
+            }
+
+        .tour-card .fav-btn {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            color: #c0392b;
+            font-size: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+            .tour-card .fav-btn:hover {
+                background: #e74c3c;
+                color: #fff;
+                transform: scale(1.1);
+            }
+
+        .tour-card .tour-body {
+            padding: 18px 20px;
+        }
+
+            .tour-card .tour-body h4 {
+                font-size: 17px;
+                font-weight: 700;
+                color: #1a1a1a;
+                margin-bottom: 4px;
+            }
+
+            .tour-card .tour-body .day-night {
+                font-size: 13px;
+                color: #888;
+                margin-bottom: 12px;
+            }
+
+    .tour-meta-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 14px;
+        border-top: 1px solid #f0f0f0;
+    }
+
+        .tour-meta-row .price {
+            font-size: 19px;
+            font-weight: 700;
+            color: #e67e22;
+        }
+
+            .tour-meta-row .price small {
+                font-size: 12px;
+                color: #999;
+                font-weight: 400;
+                display: block;
+            }
+
+        .tour-meta-row .capacity {
+            font-size: 12.5px;
+            color: #888;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        background: #fff;
+        border-radius: 16px;
+    }
+
+        .empty-state i {
+            font-size: 40px;
+            color: #ddd;
+            margin-bottom: 16px;
+        }
+
+        .empty-state p {
+            color: #999;
+            font-size: 14.5px;
+        }
+
+    .tour-detail-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 13.5px;
+        font-weight: 600;
+        color: #e67e22;
+        text-decoration: none;
+        margin-top: 12px;
+        transition: gap 0.2s ease;
+    }
+
+        .tour-detail-link:hover {
+            color: #cf6c14;
+            gap: 10px;
+        }
+</style>
+
+@if (TempData["Info"] != null)
+{
+    <div class="alert-info">
+        <i class="fa fa-info-circle" aria-hidden="true"></i> @TempData["Info"]
+    </div>
+}
+@if (TempData["Success"] != null)
+{
+    <div class="alert-success">
+        <i class="fa fa-check-circle" aria-hidden="true"></i> @TempData["Success"]
+    </div>
+}
+
+<div class="page-header-row">
+    <div>
+        <h3>Aktif Tur Rotaları</h3>
+        <p>Şu anda katılabileceğin güncel tur ve destinasyon seçenekleri.</p>
+    </div>
+    <div class="tour-count-badge">
+        <i class="fa fa-compass mr-1" aria-hidden="true"></i> @Model.Count Aktif Tur
+    </div>
+</div>
+
+
+@if (Model != null && Model.Any())
+{
+    <div class="tour-grid">
+        @foreach (var item in Model)
+        {
+            <div class="tour-card">
+                <div class="tour-img">
+                    <img src="@item.Image" alt="@item.City" />
+                    <div class="status-badge"><span class="dot"></span> Aktif</div>
+
+                    <form asp-area="Member" asp-controller="Favorite" asp-action="AddFavorite" asp-route-id="@item.DestinationId" method="post">
+                        <input type="hidden" name="destinationId" value="@item.DestinationId" />
+                        <button type="submit" class="fav-btn" title="Favorilere ekle">
+                            <i class="fa fa-heart" aria-hidden="true"></i>
+                        </button>
+                    </form>
+                </div>
+                <div class="tour-body">
+                    <h4>@item.City</h4>
+                    <div class="day-night"><i class="fa fa-clock-o" aria-hidden="true"></i> @item.DayNight</div>
+
+                    <div class="tour-meta-row">
+                        <div class="price">
+                            ₺@item.Price
+                            <small>kişi başı</small>
+                        </div>
+                        <div class="capacity">
+                            <i class="fa fa-users" aria-hidden="true"></i> @item.Capacity kişilik
+                        </div>
+                    </div>
+                   
+                    <a href="/Member/Destination/DestinationDetail/@item.DestinationId" class="tour-detail-link">
+                        Tur Detayı <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                    <a href="/Member/Comment/CommentListByDestinationWithUserId/@item.DestinationId" class="tour-detail-link">
+                        Yorumu Görüntüle <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="empty-state">
+        <i class="fa fa-map-o" aria-hidden="true"></i>
+        <p>Şu anda aktif tur rotası bulunmuyor.</p>
+    </div>
+}

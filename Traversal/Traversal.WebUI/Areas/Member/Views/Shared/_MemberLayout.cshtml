@@ -1,0 +1,331 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Üye Paneli - Traversal</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f5f6fa;
+            color: #333;
+        }
+
+        .layout-wrapper {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: #1a1d29;
+            color: #fff;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+            .sidebar .logo {
+                padding: 24px 20px;
+                font-size: 22px;
+                font-weight: 700;
+                border-bottom: 1px solid #2a2e3f;
+            }
+
+                .sidebar .logo span {
+                    color: #e67e22;
+                }
+
+            .sidebar nav {
+                flex: 1;
+                padding: 16px 0;
+            }
+
+                .sidebar nav a {
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                    padding: 12px 24px;
+                    color: #b8bcc8;
+                    text-decoration: none;
+                    font-size: 14.5px;
+                    transition: 0.2s;
+                }
+
+                    .sidebar nav a i {
+                        width: 18px;
+                        text-align: center;
+                    }
+
+                    .sidebar nav a:hover, .sidebar nav a.active {
+                        background: #262a3a;
+                        color: #fff;
+                        border-left: 3px solid #e67e22;
+                    }
+
+        /* Açılır menü (submenu) */
+        .has-submenu > .menu-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 24px;
+            color: #b8bcc8;
+            font-size: 14.5px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+            .has-submenu > .menu-toggle:hover {
+                background: #262a3a;
+                color: #fff;
+            }
+
+            .has-submenu > .menu-toggle .left {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+
+                .has-submenu > .menu-toggle .left i:first-child {
+                    width: 18px;
+                    text-align: center;
+                }
+
+            .has-submenu > .menu-toggle .chevron {
+                font-size: 11px;
+                transition: transform 0.25s ease;
+            }
+
+        .has-submenu.open > .menu-toggle .chevron {
+            transform: rotate(180deg);
+        }
+
+        .submenu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.25s ease;
+            background: #15171f;
+        }
+
+        .has-submenu.open .submenu {
+            max-height: 200px;
+        }
+
+        .submenu a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 24px 10px 52px;
+            font-size: 13.5px;
+            color: #8a8f9e;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+            .submenu a:hover, .submenu a.active {
+                color: #fff;
+            }
+
+            .submenu a .dot {
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: #4a4f63;
+                flex-shrink: 0;
+            }
+
+            .submenu a.active .dot {
+                background: #e67e22;
+            }
+
+        .sidebar .logout-box {
+            padding: 16px 24px;
+            border-top: 1px solid #2a2e3f;
+        }
+
+            .sidebar .logout-box button {
+                width: 100%;
+                background: transparent;
+                border: 1px solid #3a3e50;
+                color: #b8bcc8;
+                padding: 10px;
+                border-radius: 8px;
+                cursor: pointer;
+                font-size: 14px;
+            }
+
+                .sidebar .logout-box button:hover {
+                    background: #e74c3c;
+                    border-color: #e74c3c;
+                    color: #fff;
+                }
+
+        /* Main content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .topbar {
+            background: #fff;
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+            .topbar h4 {
+                font-size: 18px;
+                font-weight: 700;
+                color: #1a1a1a;
+            }
+
+            .topbar .user-info {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+
+                .topbar .user-info .avatar {
+                    width: 38px;
+                    height: 38px;
+                    border-radius: 50%;
+                    background: #e67e22;
+                    color: #fff;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-weight: 700;
+                    font-size: 14px;
+                }
+
+                .topbar .user-info .name {
+                    font-size: 14.5px;
+                    font-weight: 600;
+                    color: #1a1a1a;
+                }
+
+                .topbar .user-info .role {
+                    font-size: 12px;
+                    color: #888;
+                }
+
+        /* Content area */
+        .page-content {
+            padding: 32px;
+            flex: 1;
+        }
+
+        @@media (max-width: 900px) {
+            .sidebar {
+                width: 70px;
+            }
+
+                .sidebar .logo, .sidebar nav a span, .sidebar .logout-box span {
+                    display: none;
+                }
+
+                .sidebar nav a {
+                    justify-content: center;
+                    padding: 14px;
+                }
+
+            .has-submenu > .menu-toggle .left span, .has-submenu > .menu-toggle .chevron {
+                display: none;
+            }
+
+            .submenu {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="layout-wrapper">
+        <aside class="sidebar">
+            <div class="logo">Traversal<span>.</span></div>
+            <nav>
+                <a asp-area="Member" asp-controller="Dashboard" asp-action="Index" class="active">
+                    <i class="fa fa-th-large"></i> <span>Panom</span>
+                </a>
+                <a asp-area="Member" asp-controller="Profile" asp-action="Index">
+                    <i class="fa fa-user"></i> <span>Profilim</span>
+                </a>
+                <a asp-area="Member" asp-controller="Comment" asp-action="CommentListWithDestination">
+                    <i class="fa fa-comments"></i> <span>Yorumlarım</span>
+                </a>
+                <a asp-area="Member" asp-controller="Destination" asp-action="Index">
+                    <i class="fa fa-compass"></i> <span>Tur Rotaları</span>
+                </a>
+                <a  asp-area="" asp-controller="Default" asp-action="Index">
+                    <i class="fa fa-id-badge"></i> <span>Siteye Git</span>
+                </a>
+
+                <!-- Rezervasyonlarım - açılır alt menü -->
+                <div class="has-submenu open">
+                    <div class="menu-toggle" onclick="toggleSubmenu(this)">
+                        <span class="left">
+                            <i class="fa fa-calendar-check-o"></i> <span>Rezervasyonlarım</span>
+                        </span>
+                        <i class="fa fa-angle-down chevron"></i>
+                    </div>
+                    <div class="submenu">
+                        <a asp-area="Member" asp-controller="Reservation" asp-action="MyCurrentReservation" class="active">
+                            <span class="dot"></span> Güncel Rezervasyonlar
+                        </a>
+                        <a asp-area="Member" asp-controller="Reservation" asp-action="MyOldReservation">
+                            <span class="dot"></span> Geçmiş Rezervasyonlar
+                        </a>
+                        <a asp-area="Member" asp-controller="Reservation" asp-action="MyCancelledReservation">
+                            <span class="dot"></span> İptal Edilenler
+                        </a>
+                    </div>
+                </div>
+
+                <a asp-area="Member" asp-controller="Favorite" asp-action="Index">
+                    <i class="fa fa-heart"></i> <span>Favorilerim</span>
+                </a>
+            </nav>
+            <div class="logout-box">
+                <form asp-area="" asp-controller="Account" asp-action="Logout" method="post">
+                    <button type="submit"><i class="fa fa-sign-out"></i> <span>Çıkış Yap</span></button>
+                </form>
+            </div>
+        </aside>
+
+        <div class="main-content">
+            <header class="topbar">
+                <h4>@ViewData["Title"]</h4>
+                <div class="user-info">
+                    <div class="avatar">@User.Identity.Name?.Substring(0, 1).ToUpper()</div>
+                    <div>
+                        <div class="name">@User.Identity.Name</div>
+                        <div class="role">Üye</div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-content">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSubmenu(el) {
+            el.parentElement.classList.toggle('open');
+        }
+    </script>
+</body>
+</html>

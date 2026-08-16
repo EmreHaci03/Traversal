@@ -1,0 +1,571 @@
+﻿@model List<ResultReservationDto>
+
+@{
+    ViewData["Title"] = "Rezervasyonlar";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    .page-header-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+    }
+
+        .page-header-row h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin: 0;
+        }
+
+        .page-header-row p {
+            font-size: 13.5px;
+            color: #888;
+            margin-top: 4px;
+            margin-bottom: 0;
+        }
+
+    /* Export Butonları */
+    .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .export-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 10px 16px;
+        border-radius: 9px;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 600;
+        color: #fff;
+        transition: all 0.2s ease;
+    }
+
+        /* Excel */
+        .export-btn.excel {
+            background: #217346;
+            box-shadow: 0 3px 10px rgba(33, 115, 70, 0.15);
+        }
+
+            .export-btn.excel:hover {
+                background: #185c37;
+                color: #fff;
+                text-decoration: none;
+                transform: translateY(-1px);
+            }
+
+        /* PDF */
+        .export-btn.pdf {
+            background: #c0392b;
+            box-shadow: 0 3px 10px rgba(192, 57, 43, 0.15);
+        }
+
+            .export-btn.pdf:hover {
+                background: #a93226;
+                color: #fff;
+                text-decoration: none;
+                transform: translateY(-1px);
+            }
+
+    /* Sekmeler */
+    .tab-nav {
+        display: flex;
+        gap: 4px;
+        background: #fff;
+        border-radius: 12px;
+        padding: 6px;
+        margin-bottom: 20px;
+        width: fit-content;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+
+        .tab-nav button {
+            border: none;
+            background: transparent;
+            padding: 9px 20px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #888;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+            .tab-nav button:hover {
+                color: #e67e22;
+            }
+
+            .tab-nav button.active {
+                background: #e67e22;
+                color: #fff;
+            }
+
+    /* Tablo */
+    .table-card {
+        background: #fff;
+        border-radius: 14px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        overflow: hidden;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    thead {
+        background: #f8f9fb;
+    }
+
+    th {
+        text-align: left;
+        padding: 14px 20px;
+        font-size: 12.5px;
+        font-weight: 700;
+        color: #888;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+        border-bottom: 1px solid #eee;
+    }
+
+    td {
+        padding: 14px 20px;
+        font-size: 14px;
+        color: #333;
+        border-bottom: 1px solid #f2f2f2;
+        vertical-align: middle;
+    }
+
+    tbody tr:hover {
+        background: #fafbfc;
+    }
+
+    tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    /* Destinasyon */
+    .dest-name {
+        font-weight: 700;
+        color: #1a1a1a;
+    }
+
+    /* Kişi */
+    .person-count {
+        font-size: 13.5px;
+        color: #555;
+    }
+
+    /* Tarih */
+    .res-date {
+        font-size: 12.5px;
+        color: #888;
+    }
+
+    /* Durum */
+    .status-badge {
+        font-size: 11.5px;
+        font-weight: 600;
+        padding: 5px 12px;
+        border-radius: 20px;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+        .status-badge.pending {
+            background: #fff3e6;
+            color: #e67e22;
+        }
+
+        .status-badge.approved {
+            background: #eafbea;
+            color: #2e7d32;
+        }
+
+        .status-badge.cancelled {
+            background: #fdeaea;
+            color: #c0392b;
+        }
+
+    /* İşlem Butonları */
+    .action-btns {
+        display: flex;
+        gap: 8px;
+    }
+
+    .action-btn {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        font-size: 13px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+        /* Onayla */
+        .action-btn.approve {
+            background: #eafbea;
+            color: #2e7d32;
+        }
+
+            .action-btn.approve:hover {
+                background: #2e7d32;
+                color: #fff;
+            }
+
+        /* İptal */
+        .action-btn.cancel {
+            background: #fdeaea;
+            color: #c0392b;
+        }
+
+            .action-btn.cancel:hover {
+                background: #c0392b;
+                color: #fff;
+            }
+
+    /* Alert */
+    .alert-success {
+        background: #eafbea;
+        color: #2e7d32;
+        padding: 13px 18px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        font-size: 14px;
+    }
+
+    .alert-danger {
+        background: #fdeaea;
+        color: #c0392b;
+        padding: 13px 18px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        font-size: 14px;
+    }
+
+    /* Boş durum */
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+    }
+
+        .empty-state i {
+            font-size: 40px;
+            color: #ddd;
+            margin-bottom: 16px;
+        }
+
+        .empty-state p {
+            color: #999;
+            font-size: 14.5px;
+        }
+
+    /* Responsive */
+    @@media (max-width: 768px) {
+        .page-header-row {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .header-actions {
+            width: 100%;
+        }
+
+        .export-btn {
+            flex: 1;
+        }
+
+        .table-card {
+            overflow-x: auto;
+        }
+
+        table {
+            min-width: 700px;
+        }
+
+        .tab-nav {
+            overflow-x: auto;
+            max-width: 100%;
+        }
+    }
+</style>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert-success">
+        <i class="fa fa-check-circle mr-1" aria-hidden="true"></i>
+        @TempData["Success"]
+    </div>
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert-danger">
+        <i class="fa fa-exclamation-circle mr-1" aria-hidden="true"></i>
+        @TempData["Error"]
+    </div>
+}
+
+
+<!-- HEADER -->
+<div class="page-header-row">
+
+    <div>
+        <h3>Rezervasyonlar</h3>
+        <p>Tüm rezervasyon taleplerini buradan yönetebilirsiniz.</p>
+    </div>
+
+    <div class="header-actions">
+
+        <!-- Excel -->
+        <a asp-area="Admin"
+           asp-controller="Reservation"
+           asp-action="ExportExcel"
+           class="export-btn excel">
+
+            <i class="fa fa-file-excel-o" aria-hidden="true"></i>
+
+            Excel'e Aktar
+
+        </a>
+
+        <!-- PDF -->
+        <a asp-area="Admin"
+           asp-controller="Reservation"
+           asp-action="ExportPdf"
+           class="export-btn pdf">
+
+            <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+
+            PDF'e Aktar
+
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- TABLAR -->
+<div class="tab-nav">
+
+    <button type="button"
+            class="active"
+            onclick="filterTab('all', this)">
+        Tümü
+    </button>
+
+    <button type="button"
+            onclick="filterTab('pending', this)">
+        Bekleyen
+    </button>
+
+    <button type="button"
+            onclick="filterTab('approved', this)">
+        Onaylı
+    </button>
+
+    <button type="button"
+            onclick="filterTab('cancelled', this)">
+        İptal
+    </button>
+
+</div>
+
+
+<!-- TABLO -->
+<div class="table-card">
+
+    @if (Model != null && Model.Any())
+    {
+        <table id="resTable">
+
+            <thead>
+
+                <tr>
+                    <th>Destinasyon</th>
+                    <th>Kişi Sayısı</th>
+                    <th>Tarih</th>
+                    <th>Durum</th>
+                    <th>İşlemler</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    var statusClass = item.Status switch
+                    {
+                        "Onaylandı" => "approved",
+                        "İptal" => "cancelled",
+                        _ => "pending"
+                    };
+
+                    <tr data-status="@statusClass">
+
+                        <!-- Destinasyon -->
+                        <td>
+                            <span class="dest-name">
+                                @item.DestinationCity
+                            </span>
+                        </td>
+
+                        <!-- Kişi Sayısı -->
+                        <td>
+                            <span class="person-count">
+
+                                <i class="fa fa-users"
+                                   aria-hidden="true"></i>
+
+                                @item.PersonCount kişi
+
+                            </span>
+                        </td>
+
+                        <!-- Tarih -->
+                        <td>
+                            <span class="res-date">
+                                @item.ReservationDate.ToString("dd MMM yyyy")
+                            </span>
+                        </td>
+
+                        <!-- Durum -->
+                        <td>
+
+                            <span class="status-badge @statusClass">
+
+                                <i class="fa fa-circle"
+                                   style="font-size:6px;"
+                                   aria-hidden="true"></i>
+
+                                @item.Status
+
+                            </span>
+
+                        </td>
+
+                        <!-- İşlemler -->
+                        <td>
+
+                            <div class="action-btns">
+
+                                @if (item.Status == "Beklemede")
+                                {
+                                    <!-- Onayla -->
+                                    <form asp-area="Admin"
+                                          asp-controller="Reservation"
+                                          asp-action="ApproveReservation"
+                                          asp-route-id="@item.ReservationId"
+                                          method="post">
+
+                                        <button type="submit"
+                                                class="action-btn approve"
+                                                title="Onayla">
+
+                                            <i class="fa fa-check"
+                                               aria-hidden="true"></i>
+
+                                        </button>
+
+                                    </form>
+
+
+                                    <!-- İptal Et -->
+                                    <form asp-area="Admin"
+                                          asp-controller="Reservation"
+                                          asp-action="CancelReservation"
+                                          asp-route-id="@item.ReservationId"
+                                          method="post">
+
+                                        <button type="submit"
+                                                class="action-btn cancel"
+                                                title="İptal Et">
+
+                                            <i class="fa fa-times"
+                                               aria-hidden="true"></i>
+
+                                        </button>
+
+                                    </form>
+                                }
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+    }
+    else
+    {
+        <div class="empty-state">
+
+            <i class="fa fa-calendar-o"
+               aria-hidden="true"></i>
+
+            <p>
+                Henüz rezervasyon bulunmuyor.
+            </p>
+
+        </div>
+    }
+
+</div>
+
+
+@section Script {
+
+    <script>
+
+        function filterTab(status, btn) {
+
+            // Aktif butonu değiştir
+            document
+                .querySelectorAll('.tab-nav button')
+                .forEach(b => b.classList.remove('active'));
+
+            btn.classList.add('active');
+
+
+            // Tablo satırlarını filtrele
+            const rows =
+                document.querySelectorAll('#resTable tbody tr');
+
+            rows.forEach(row => {
+
+                if (
+                    status === 'all' ||
+                    row.dataset.status === status
+                ) {
+                    row.style.display = '';
+                }
+                else {
+                    row.style.display = 'none';
+                }
+
+            });
+
+        }
+
+    </script>
+}

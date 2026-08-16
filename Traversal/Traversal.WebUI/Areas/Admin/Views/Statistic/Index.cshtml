@@ -1,0 +1,250 @@
+﻿@{
+    ViewData["Title"] = "Kontrol Paneli";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+<script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+<style>
+    .col-lg-12 {
+        width: 100%;
+    }
+
+    .page-header-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+    }
+
+        .page-header-row h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .page-header-row p {
+            font-size: 13.5px;
+            color: #888;
+            margin-top: 4px;
+        }
+
+    .conn-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #f2f2f2;
+        color: #888;
+        font-size: 12.5px;
+        font-weight: 600;
+        padding: 8px 16px;
+        border-radius: 20px;
+    }
+
+        .conn-badge.connected {
+            background: #eafbea;
+            color: #2e7d32;
+        }
+
+        .conn-badge .dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+    }
+
+    @@media (max-width: 1100px) {
+        .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @@media (max-width: 600px) {
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .stat-card {
+        background: #fff;
+        border-radius: 16px;
+        padding: 20px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        }
+
+    .stat-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 18px;
+        margin-bottom: 14px;
+    }
+
+        .stat-icon.orange {
+            background: linear-gradient(135deg,#e67e22,#f0a860);
+        }
+
+        .stat-icon.blue {
+            background: linear-gradient(135deg,#2874a6,#3498db);
+        }
+
+        .stat-icon.green {
+            background: linear-gradient(135deg,#27ae60,#4cbf82);
+        }
+
+        .stat-icon.red {
+            background: linear-gradient(135deg,#c0392b,#e74c3c);
+        }
+
+        .stat-icon.purple {
+            background: linear-gradient(135deg,#8e44ad,#a569bd);
+        }
+
+        .stat-icon.teal {
+            background: linear-gradient(135deg,#16a085,#48c9b0);
+        }
+
+        .stat-icon.pink {
+            background: linear-gradient(135deg,#c0257c,#e056a0);
+        }
+
+        .stat-icon.gray {
+            background: linear-gradient(135deg,#607d8b,#90a4ae);
+        }
+
+    .stat-title {
+        font-size: 12.5px;
+        color: #999;
+        margin-bottom: 4px;
+    }
+
+    .stat-number {
+        font-size: 26px;
+        font-weight: 800;
+        color: #1a1a1a;
+    }
+</style>
+<div class="col-lg-12">
+
+    <div class="page-header-row">
+        <div>
+            <h3>Kontrol Paneli</h3>
+            <p>Tüm istatistikler anlık olarak güncellenir.</p>
+        </div>
+        <div class="conn-badge" id="connBadge">
+            <span class="dot"></span>
+            <span id="connstatus">Bağlanıyor...</span>
+        </div>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon orange"><i class="fa fa-map-marker" aria-hidden="true"></i></div>
+            <div class="stat-title">Destinasyon</div>
+            <div class="stat-number" id="destinationCount"></div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon blue"><i class="fa fa-calendar-check-o" aria-hidden="true"></i></div>
+            <div class="stat-title">Toplam Rezervasyon</div>
+            <div class="stat-number" id="totalreservationCount"></div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon green"><i class="fa fa-check-circle" aria-hidden="true"></i></div>
+            <div class="stat-title">Onaylanan Rezervasyon</div>
+            <div class="stat-number" id="approvedreservationCount"></div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon orange"><i class="fa fa-clock-o" aria-hidden="true"></i></div>
+            <div class="stat-title">Bekleyen Rezervasyon</div>
+            <div class="stat-number" id="holdReservationCount"></div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon red"><i class="fa fa-times-circle" aria-hidden="true"></i></div>
+            <div class="stat-title">İptal Edilen Rezervasyon</div>
+            <div class="stat-number" id="cancelledReservationCount"></div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon purple"><i class="fa fa-users" aria-hidden="true"></i></div>
+            <div class="stat-title">Kayıtlı Kullanıcı</div>
+            <div class="stat-number" id="userCount"></div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon teal"><i class="fa fa-quote-left" aria-hidden="true"></i></div>
+            <div class="stat-title">Referans</div>
+            <div class="stat-number" id="testimonialCount"></div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon pink"><i class="fa fa-heart" aria-hidden="true"></i></div>
+            <div class="stat-title">Favori</div>
+            <div class="stat-number" id="favoriteCount"></div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon gray"><i class="fa fa-comments" aria-hidden="true"></i></div>
+            <div class="stat-title">Yorum</div>
+            <div class="stat-number" id="commentCount"></div>
+        </div>
+    </div>
+
+</div>
+
+@section Script {
+    <script>
+        $(document).ready(function () {
+            var connection = new signalR.HubConnectionBuilder()
+                .withUrl("/traversalhub")
+                .build();
+
+            connection.on("ReceiveStatistic", function (data) {
+                $("#destinationCount").text(data.destinationCount);
+                $("#totalreservationCount").text(data.totalreservationCount);
+                $("#approvedreservationCount").text(data.approvedreservationCount);
+                $("#holdReservationCount").text(data.holdReservationCount);
+                $("#cancelledReservationCount").text(data.cancelledReservationCount);
+                $("#userCount").text(data.userCount);
+                $("#testimonialCount").text(data.testimonialCount);
+                $("#favoriteCount").text(data.favoriteCount);
+                $("#commentCount").text(data.commentCount);
+            });
+
+             connection.start()
+            .then(function(){
+               $("#connstatus").text("Bağlandı");
+
+               connection.invoke("SendStatistic");
+
+               setInterval(function(){
+                   connection.invoke("SendStatistic");
+               },3000);
+            })
+            .catch(function(err){
+                console.log(err);
+            });
+        });
+    </script>
+}

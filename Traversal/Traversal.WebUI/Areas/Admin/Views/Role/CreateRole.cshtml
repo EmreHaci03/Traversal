@@ -1,0 +1,240 @@
+﻿@model CreateAppRoleDto
+@{
+    ViewData["Title"] = "Yeni Rol";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<style>
+    .col-lg-12 {
+        width: 100%;
+    }
+
+    .page-header-row {
+        margin-bottom: 24px;
+    }
+
+        .page-header-row h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .page-header-row p {
+            font-size: 13.5px;
+            color: #888;
+            margin-top: 4px;
+        }
+
+    .form-layout {
+        display: grid;
+        grid-template-columns: 2.2fr 1fr;
+        gap: 24px;
+        align-items: start;
+    }
+
+    @@media (max-width: 950px) {
+        .form-layout {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .form-card {
+        background: #fff;
+        border-radius: 16px;
+        padding: 32px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+        .form-group label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #555;
+            display: block;
+            margin-bottom: 7px;
+        }
+
+        .form-group .required {
+            color: #e74c3c;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #e5e5e5;
+            border-radius: 10px;
+            font-size: 14.5px;
+        }
+
+            .form-group input:focus {
+                outline: none;
+                border-color: #e67e22;
+                box-shadow: 0 0 0 3px rgba(230,126,34,0.1);
+            }
+
+        .form-group .hint {
+            font-size: 11.5px;
+            color: #aaa;
+            margin-top: 5px;
+        }
+
+    .preview-card {
+        background: #fff;
+        border-radius: 16px;
+        padding: 24px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        text-align: center;
+        position: sticky;
+        top: 20px;
+    }
+
+        .preview-card .preview-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: #aaa;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 18px;
+            text-align: left;
+        }
+
+    .role-icon-preview {
+        width: 64px;
+        height: 64px;
+        border-radius: 18px;
+        background: linear-gradient(135deg,#8e44ad,#a569bd);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 26px;
+        margin: 0 auto 16px;
+    }
+
+    .preview-role-name {
+        font-size: 16px;
+        font-weight: 700;
+        color: #1a1a1a;
+    }
+
+    .preview-role-sub {
+        font-size: 12px;
+        color: #999;
+        margin-top: 4px;
+    }
+
+    .tips-box {
+        background: #fff9f2;
+        border: 1px dashed #f0d4b8;
+        border-radius: 14px;
+        padding: 18px 20px;
+        margin-top: 20px;
+    }
+
+        .tips-box h6 {
+            font-size: 13px;
+            font-weight: 700;
+            color: #cf6c14;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tips-box p {
+            font-size: 12.5px;
+            color: #a06a3a;
+            line-height: 1.6;
+        }
+
+    .form-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        margin-top: 24px;
+        padding-top: 22px;
+        border-top: 1px solid #f0f0f0;
+    }
+
+    .save-btn {
+        background: #e67e22;
+        color: #fff;
+        border: none;
+        padding: 13px 34px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 14.5px;
+        cursor: pointer;
+    }
+
+        .save-btn:hover {
+            background: #cf6c14;
+        }
+
+    .cancel-btn {
+        background: #fff;
+        color: #888;
+        border: 1px solid #e0e0e0;
+        padding: 13px 28px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 14.5px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+    }
+
+        .cancel-btn:hover {
+            background: #f5f5f5;
+        }
+</style>
+
+<div class="col-lg-12">
+    <div class="page-header-row">
+        <h3>Yeni Rol Ekle</h3>
+        <p>Sisteme yeni bir kullanıcı rolü tanımlayın.</p>
+    </div>
+
+    <form asp-area="Admin" asp-controller="Role" asp-action="CreateRole" method="post">
+        <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+        <div class="form-layout">
+            <div class="form-card">
+                <div class="form-group">
+                    <label asp-for="RoleName">Rol Adı <span class="required">*</span></label>
+                    <input asp-for="RoleName" placeholder="Örn: Editor, Moderator" oninput="updatePreview()" id="roleNameInput" />
+                    <span asp-validation-for="RoleName" class="text-danger"></span>
+                    <div class="hint">Rol adı, sistemde benzersiz olmalıdır.</div>
+                </div>
+
+                <div class="form-footer">
+                    <a asp-area="Admin" asp-controller="Role" asp-action="RoleList" class="cancel-btn">Vazgeç</a>
+                    <button type="submit" class="save-btn"><i class="fa fa-check mr-1" aria-hidden="true"></i> Kaydet</button>
+                </div>
+            </div>
+
+            <div class="preview-card">
+                <div class="preview-label">Önizleme</div>
+                <div class="role-icon-preview"><i class="fa fa-shield" aria-hidden="true"></i></div>
+                <div class="preview-role-name" id="previewRoleName">Rol Adı</div>
+                <div class="preview-role-sub">Yeni Rol</div>
+
+                <div class="tips-box">
+                    <h6><i class="fa fa-lightbulb-o" aria-hidden="true"></i> İpucu</h6>
+                    <p>Rol adları kısa ve açıklayıcı olmalı. Örneğin "Editor", "Moderator" gibi.</p>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Script {
+    <script>
+        function updatePreview() {
+            const name = document.getElementById('roleNameInput').value || 'Rol Adı';
+            document.getElementById('previewRoleName').textContent = name;
+        }
+    </script>
+}

@@ -1,0 +1,250 @@
+﻿@model GetDestinationByIdDto
+@{
+    Layout = "~/Views/Shared/UI_Layout.cshtml";
+}
+<style>
+    .w3l-homeblock1 {
+        background: var(--surface-0, #fafafa);
+    }
+
+    .detail-hero-title {
+        font-size: 34px;
+        font-weight: 700;
+        color: #1a1a1a;
+    }
+
+    .detail-price-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #fff3e6;
+        color: #e67e22;
+        font-size: 20px;
+        font-weight: 700;
+        padding: 10px 22px;
+        border-radius: 30px;
+        margin: 16px 0;
+    }
+
+    .detail-meta-list {
+        display: flex;
+        gap: 24px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin: 16px 0 0;
+        list-style: none;
+        padding: 0;
+    }
+
+        .detail-meta-list li {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            color: #777;
+        }
+
+    .radius-image {
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    .single-post-content p {
+        font-size: 16px;
+        line-height: 1.9;
+        color: #555;
+    }
+
+    .details-section {
+        margin: 40px 0;
+    }
+
+        .details-section h5 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+            .details-section h5 i {
+                color: #e67e22;
+            }
+
+    .second-image {
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        margin: 24px 0;
+    }
+
+        .second-image img {
+            width: 100%;
+            height: 340px;
+            object-fit: cover;
+        }
+
+    .capacity-box {
+        background: #fff;
+        border: 1px solid #eee;
+        border-radius: 16px;
+        padding: 24px 28px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+        margin: 30px 0;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+        .capacity-box .item h6 {
+            font-size: 12px;
+            color: #aaa;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin: 0 0 4px;
+        }
+
+        .capacity-box .item span {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+    .book-now-btn {
+        display: inline-block;
+        background: #e67e22;
+        color: #fff;
+        font-weight: 600;
+        padding: 14px 40px;
+        border-radius: 10px;
+        text-decoration: none;
+        transition: background 0.3s ease;
+    }
+
+        .book-now-btn:hover {
+            background: #cf6c14;
+            color: #fff;
+        }
+
+    .comment-avatar {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 16px;
+        flex-shrink: 0;
+    }
+
+    .comment-item {
+        background: #fff;
+        border: 1px solid #eee;
+        border-radius: 14px;
+        padding: 18px 20px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .comment-name {
+        font-size: 15px;
+        font-weight: 700;
+        color: #1a1a1a;
+    }
+
+    .comment-date {
+        font-size: 12px;
+        color: #aaa;
+    }
+
+    .comment-text {
+        font-size: 14.5px;
+        color: #666;
+        line-height: 1.7;
+    }
+
+    .comment-input {
+        border-radius: 10px !important;
+        border: 1px solid #eee !important;
+        padding: 12px 16px !important;
+    }
+
+    .side-title {
+        font-size: 22px;
+        font-weight: 700;
+        color: #1a1a1a;
+    }
+</style>
+
+<section class="w3l-about-breadcrumb text-left">
+    <div class="breadcrumb-bg breadcrumb-bg-about py-sm-5 py-4">
+        <div class="container">
+            <h2 class="title">@Model.City</h2>
+            <ul class="breadcrumbs-custom-path mt-2">
+                <li><a href="/Default/Index/">Ana Sayfa</a></li>
+                <li class="active"><span class="fa fa-arrow-right mx-2" aria-hidden="true"></span> @Model.City</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<div class="py-5 w3l-homeblock1 text-center">
+    <div class="container mt-md-3">
+        <h3 class="detail-hero-title text-center mb-2">@Model.City</h3>
+        <p class="text-center text-muted mb-3">@Model.DayNight</p>
+        <div class="detail-price-badge">
+            ₺@Model.Price'dan başlayan fiyatlarla
+        </div>
+        <ul class="detail-meta-list">
+            <li><i class="fa fa-users" aria-hidden="true"></i> @Model.Capacity kişilik kontenjan</li>
+        </ul>
+    </div>
+</div>
+
+<section class="blog-post-main w3l-homeblock1">
+    <div class="blog-content-inf pb-5">
+        <div class="container pb-lg-4">
+            <div class="single-post-image">
+                <div class="post-content">
+                    <img src="@Model.CoverImage" class="radius-image img-fluid mb-5" alt="@Model.City" />
+                </div>
+            </div>
+            <div class="single-post-content">
+                <p class="mb-4">@Model.Description</p>
+
+                <div class="capacity-box">
+                    <div class="item">
+                        <h6>Süre</h6>
+                        <span>@Model.DayNight</span>
+                    </div>
+                    <div class="item">
+                        <h6>Kontenjan</h6>
+                        <span>@Model.Capacity kişi</span>
+                    </div>
+                    <div class="item">
+                        <h6>Fiyat</h6>
+                        <span>₺@Model.Price</span>
+                    </div>
+                </div>
+
+                <div class="details-section">
+                    <h5><i class="fa fa-map-marker" aria-hidden="true"></i> Tur Programı</h5>
+                    <p>@Model.Details1</p>
+
+                    <div class="second-image">
+                        <img src="@Model.Image2" alt="@Model.City" />
+                    </div>
+
+                    <p>@Model.Details2</p>
+                </div>
+
+                <div class="text-center mt-5">
+                    <a href="#" class="book-now-btn">Şimdi Rezervasyon Yap</a>
+                </div>
+
+                @await Component.InvokeAsync("DestinationCommentList", new { DestinationId = ViewBag.DestinationId })
+
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,47 @@
+﻿@model List<GetCommentByIdDto>
+<div class="comments-section mt-5">
+    <h4 class="side-title mb-4">Yorumlar (@ViewBag.Count)</h4>
+
+    @foreach(var item in Model)
+    {
+        <div class="comment-item mb-4">
+            <div class="d-flex">
+                <img src="@item.NameSurname.Substring(0,1).ToUpper()" class="comment-avatar" alt="">
+                <div class="comment-body">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <h6 class="comment-name mb-0">@item.NameSurname</h6>
+                        <span class="comment-date">  @item.CommentDate.ToShortDateString()</span>
+                    </div>
+                    <p class="comment-text mb-0">
+                        @item.Content.
+                    </p>
+                </div>
+            </div>
+        </div>
+    }
+    @if (User.Identity.IsAuthenticated)
+{
+    <div class="comment-form-box mt-5">
+        <h5 class="side-title mb-3">Yorum Yap</h5>
+        <form asp-controller="Comment" asp-action="AddComment" method="post">
+            <input type="hidden" name="DestinationId" value="@ViewBag.DestId" />
+            <div class="mb-3">
+                <textarea name="Content" class="form-control comment-input" rows="4" placeholder="Yorumunuzu yazın..." required></textarea>
+            </div>
+            <button type="submit" class="book-now-btn border-0">Yorumu Gönder</button>
+        </form>
+    </div>
+}
+else
+{
+    <div class="comment-form-box mt-5 text-center p-4" style="background:#fff3e6; border-radius:14px;">
+        <p class="mb-3" style="color:#555;">
+            <i class="fa fa-lock" aria-hidden="true"></i>
+            Yorum yapabilmek için giriş yapmalısınız.
+        </p>
+        <a asp-area="" asp-controller="Account" asp-action="Login" class="book-now-btn border-0">
+            Giriş Yap
+        </a>
+    </div>
+}
+</div>

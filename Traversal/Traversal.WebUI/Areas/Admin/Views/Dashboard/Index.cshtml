@@ -1,0 +1,714 @@
+﻿@{
+    ViewData["Title"] = "Kontrol Paneli";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<style>
+    .col-lg-12 {
+        width: 100%;
+    }
+
+    .welcome-box {
+        background: linear-gradient(135deg, #14161f, #262a3a);
+        color: #fff;
+        border-radius: 18px;
+        padding: 32px 36px;
+        margin-bottom: 28px;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .welcome-box::after {
+            content: "";
+            position: absolute;
+            right: -80px;
+            top: -80px;
+            width: 260px;
+            height: 260px;
+            background: rgba(230, 126, 34, 0.15);
+            border-radius: 50%;
+        }
+
+        .welcome-box::before {
+            content: "";
+            position: absolute;
+            right: 60px;
+            bottom: -100px;
+            width: 180px;
+            height: 180px;
+            background: rgba(52, 152, 219, 0.12);
+            border-radius: 50%;
+        }
+
+        .welcome-box h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .welcome-box p {
+            color: #a7abc0;
+            font-size: 14px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .welcome-box .date-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.08);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12.5px;
+            margin-top: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+    /* Piyasa & Hava Durumu satırı */
+    .market-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr) 1.3fr;
+        gap: 16px;
+        margin-bottom: 28px;
+    }
+
+    @@media (max-width: 1200px) {
+        .market-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    @@media (max-width: 700px) {
+        .market-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    .currency-card {
+        background: #fff;
+        border-radius: 16px;
+        padding: 18px 20px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        position: relative;
+        overflow: hidden;
+    }
+
+        .currency-card .cur-top {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .currency-card .cur-flag {
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 800;
+            color: #fff;
+        }
+
+            .currency-card .cur-flag.usd {
+                background: linear-gradient(135deg,#27ae60,#4cbf82);
+            }
+
+            .currency-card .cur-flag.eur {
+                background: linear-gradient(135deg,#2874a6,#3498db);
+            }
+
+            .currency-card .cur-flag.gbp {
+                background: linear-gradient(135deg,#8e44ad,#a569bd);
+            }
+
+            .currency-card .cur-flag.gold {
+                background: linear-gradient(135deg,#e6a817,#f0c94a);
+            }
+
+        .currency-card .cur-name {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 3px;
+        }
+
+        .currency-card .cur-value {
+            font-size: 20px;
+            font-weight: 800;
+            color: #1a1a1a;
+        }
+
+            .currency-card .cur-value small {
+                font-size: 12px;
+                font-weight: 500;
+                color: #aaa;
+            }
+
+    .weather-card {
+        background: linear-gradient(135deg, #2874a6, #3aa0d8);
+        border-radius: 16px;
+        padding: 20px 22px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .weather-card::after {
+            content: "";
+            position: absolute;
+            right: -30px;
+            bottom: -30px;
+            width: 120px;
+            height: 120px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+
+        .weather-card .w-left {
+            position: relative;
+            z-index: 1;
+        }
+
+        .weather-card .w-city {
+            font-size: 13px;
+            opacity: 0.85;
+            margin-bottom: 4px;
+        }
+
+        .weather-card .w-temp {
+            font-size: 30px;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .weather-card .w-desc {
+            font-size: 12.5px;
+            opacity: 0.85;
+            margin-top: 4px;
+            text-transform: capitalize;
+        }
+
+        .weather-card .w-icon {
+            font-size: 46px;
+            position: relative;
+            z-index: 1;
+            opacity: 0.95;
+        }
+
+    /* Ana istatistik kartları */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        margin-bottom: 28px;
+    }
+
+    @@media (max-width: 1100px) {
+        .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @@media (max-width: 600px) {
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .stat-card {
+        background: #fff;
+        border-radius: 16px;
+        padding: 22px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        text-decoration: none;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        }
+
+        .stat-card .icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 21px;
+            color: #fff;
+            flex-shrink: 0;
+        }
+
+            .stat-card .icon.orange {
+                background: linear-gradient(135deg,#e67e22,#f0a860);
+            }
+
+            .stat-card .icon.blue {
+                background: linear-gradient(135deg,#2874a6,#3498db);
+            }
+
+            .stat-card .icon.green {
+                background: linear-gradient(135deg,#27ae60,#4cbf82);
+            }
+
+            .stat-card .icon.red {
+                background: linear-gradient(135deg,#c0392b,#e74c3c);
+            }
+
+        .stat-card .value {
+            font-size: 24px;
+            font-weight: 800;
+            color: #1a1a1a;
+            line-height: 1;
+        }
+
+        .stat-card .label {
+            font-size: 12.5px;
+            color: #888;
+            margin-top: 6px;
+        }
+
+    /* İçerik alanı: sol geniş, sağ dar */
+    .content-grid {
+        display: grid;
+        grid-template-columns: 1.6fr 1fr;
+        gap: 24px;
+    }
+
+    @@media (max-width: 1000px) {
+        .content-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .panel-card {
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        margin-bottom: 24px;
+        overflow: hidden;
+    }
+
+        .panel-card .panel-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 24px;
+            border-bottom: 1px solid #f2f2f2;
+        }
+
+            .panel-card .panel-head h5 {
+                font-size: 15.5px;
+                font-weight: 700;
+                color: #1a1a1a;
+            }
+
+            .panel-card .panel-head a {
+                font-size: 12.5px;
+                color: #e67e22;
+                text-decoration: none;
+                font-weight: 600;
+            }
+
+        .panel-card .panel-body {
+            padding: 12px 0;
+        }
+
+    /* Son mesajlar listesi */
+    .list-item {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px 24px;
+        transition: background 0.15s ease;
+    }
+
+        .list-item:hover {
+            background: #fafbfc;
+        }
+
+        .list-item .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #fff3e6;
+            color: #e67e22;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .list-item .info {
+            flex: 1;
+            min-width: 0;
+        }
+
+            .list-item .info .name {
+                font-size: 13.5px;
+                font-weight: 700;
+                color: #1a1a1a;
+            }
+
+            .list-item .info .subject {
+                font-size: 12.5px;
+                color: #999;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+        .list-item .time {
+            font-size: 11.5px;
+            color: #bbb;
+            white-space: nowrap;
+        }
+
+        .list-item .dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #e67e22;
+            flex-shrink: 0;
+        }
+
+    /* Bekleyen onaylar */
+    .pending-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 14px 24px;
+        border-bottom: 1px solid #f5f5f5;
+    }
+
+        .pending-item:last-child {
+            border-bottom: none;
+        }
+
+        .pending-item .p-info .p-title {
+            font-size: 13.5px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .pending-item .p-info .p-sub {
+            font-size: 12px;
+            color: #999;
+            margin-top: 2px;
+        }
+
+    .pending-badge {
+        font-size: 11px;
+        font-weight: 700;
+        background: #fff3e6;
+        color: #e67e22;
+        padding: 4px 10px;
+        border-radius: 20px;
+    }
+
+    /* Hızlı erişim */
+    .quick-links {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        padding: 20px 24px;
+    }
+
+    .quick-link {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        padding: 18px 10px;
+        background: #f8f9fb;
+        border-radius: 12px;
+        text-decoration: none;
+        transition: 0.2s;
+    }
+
+        .quick-link:hover {
+            background: #fff3e6;
+        }
+
+        .quick-link i {
+            font-size: 20px;
+            color: #e67e22;
+        }
+
+        .quick-link span {
+            font-size: 12px;
+            font-weight: 600;
+            color: #555;
+            text-align: center;
+        }
+
+    /* En popüler destinasyonlar */
+    .top-dest-item {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 13px 24px;
+    }
+
+        .top-dest-item img {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        .top-dest-item .td-info {
+            flex: 1;
+        }
+
+            .top-dest-item .td-info .td-name {
+                font-size: 13.5px;
+                font-weight: 700;
+                color: #1a1a1a;
+            }
+
+            .top-dest-item .td-info .td-price {
+                font-size: 12px;
+                color: #e67e22;
+                font-weight: 600;
+            }
+
+        .top-dest-item .td-rank {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #fff3e6;
+            color: #e67e22;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11.5px;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+    .empty-mini {
+        padding: 30px 24px;
+        text-align: center;
+        color: #bbb;
+        font-size: 13px;
+    }
+</style>
+
+<div class="col-lg-12">
+
+    <div class="welcome-box">
+        <h2>Hoş geldin, Yönetici 👋</h2>
+        <p>Traversal yönetim paneline genel bakış — tüm içerikler, rezervasyonlar ve kullanıcı etkileşimleri burada.</p>
+        <div class="date-badge"><i class="fa fa-calendar" aria-hidden="true"></i> @DateTime.Now.ToString("dd MMMM yyyy, dddd")</div>
+    </div>
+
+    <!-- Piyasa & Hava Durumu -->
+    <div class="market-grid">
+        <div class="currency-card">
+            <div class="cur-top">
+                <div class="cur-flag usd">$</div>
+            </div>
+            <div class="cur-name">USD/TRY</div>
+            <div class="cur-value">@(ViewBag.UsdTry != null ? ((decimal)ViewBag.UsdTry).ToString("0.00") : "—") <small>₺</small></div>
+        </div>
+
+        <div class="currency-card">
+            <div class="cur-top">
+                <div class="cur-flag eur">€</div>
+            </div>
+            <div class="cur-name">EUR/TRY</div>
+            <div class="cur-value">@(ViewBag.EurTry != null ? ((decimal)ViewBag.EurTry).ToString("0.00") : "—") <small>₺</small></div>
+        </div>
+
+        <div class="currency-card">
+            <div class="cur-top">
+                <div class="cur-flag gbp">£</div>
+            </div>
+            <div class="cur-name">GBP/TRY</div>
+            <div class="cur-value">@(ViewBag.GbpTry != null ? ((decimal)ViewBag.GbpTry).ToString("0.00") : "—") <small>₺</small></div>
+        </div>
+
+        <div class="currency-card">
+            <div class="cur-top">
+                <div class="cur-flag gold"><i class="fa fa-circle" style="font-size:10px;"></i></div>
+            </div>
+            <div class="cur-name">Gram Altın</div>
+            <div class="cur-value">@(ViewBag.GoldTry != null ? ((decimal)ViewBag.GoldTry).ToString("0.00") : "—") <small>₺</small></div>
+        </div>
+
+        <div class="weather-card">
+            <div class="w-left">
+                <div class="w-city"><i class="fa fa-map-marker" aria-hidden="true"></i> @(ViewBag.WeatherCity ?? "İstanbul")</div>
+                <div class="w-temp">@(ViewBag.WeatherTemp != null ? ViewBag.WeatherTemp + "°" : "—")</div>
+                <div class="w-desc">@(ViewBag.WeatherDesc ?? "Veri bekleniyor...")</div>
+            </div>
+            <div class="w-icon">
+                <i class="fa fa-cloud" aria-hidden="true"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="stats-grid">
+        <a href="/Admin/Destination/Index" class="stat-card">
+            <div class="icon orange"><i class="fa fa-map-marker" aria-hidden="true"></i></div>
+            <div>
+                <div class="value">@ViewBag.DestinationCount</div>
+                <div class="label">Destinasyon</div>
+            </div>
+        </a>
+        <a href="/Admin/Reservation/Index" class="stat-card">
+            <div class="icon blue"><i class="fa fa-calendar-check-o" aria-hidden="true"></i></div>
+            <div>
+                <div class="value">@ViewBag.ReservationCount</div>
+                <div class="label">Rezervasyon</div>
+            </div>
+        </a>
+        <a href="/Admin/User/Index" class="stat-card">
+            <div class="icon green"><i class="fa fa-users" aria-hidden="true"></i></div>
+            <div>
+                <div class="value">@ViewBag.UserCount</div>
+                <div class="label">Kayıtlı Kullanıcı</div>
+            </div>
+        </a>
+        <a href="/Admin/Message/Index" class="stat-card">
+            <div class="icon red"><i class="fa fa-envelope" aria-hidden="true"></i></div>
+            <div>
+                <div class="value">@ViewBag.UnreadMessageCount</div>
+                <div class="label">Okunmamış Mesaj</div>
+            </div>
+        </a>
+    </div>
+
+    <div class="content-grid">
+        <div>
+            <div class="panel-card">
+                <div class="panel-head">
+                    <h5>Son Gelen Mesajlar</h5>
+                    <a href="/Admin/Message/Index">Tümünü Gör</a>
+                </div>
+                <div class="panel-body">
+                    @if (ViewBag.RecentMessages != null && ((IEnumerable<dynamic>)ViewBag.RecentMessages).Any())
+                    {
+                        @foreach (var msg in ViewBag.RecentMessages)
+                        {
+                            <div class="list-item">
+                                @if (!msg.Status)
+                                {
+                                    <span class="dot"></span>
+                                }
+                                <div class="avatar">@msg.NameSurname[0].ToString().ToUpper()</div>
+                                <div class="info">
+                                    <div class="name">@msg.NameSurname</div>
+                                    <div class="subject">@msg.Subject</div>
+                                </div>
+                                <div class="time">@msg.SendDate.ToString("dd MMM")</div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="empty-mini">Henüz mesaj bulunmuyor.</div>
+                    }
+                </div>
+            </div>
+
+            <div class="panel-card">
+                <div class="panel-head">
+                    <h5>Onay Bekleyenler</h5>
+                    <a href="/Admin/Comment/Index">Tümünü Gör</a>
+                </div>
+                <div class="panel-body">
+                    @if (ViewBag.PendingComments != null && ((IEnumerable<dynamic>)ViewBag.PendingComments).Any())
+                    {
+                        @foreach (var c in ViewBag.PendingComments)
+                        {
+                            <div class="pending-item">
+                                <div class="p-info">
+                                    <div class="p-title">@c.NameSurname</div>
+                                    <div class="p-sub">@c.Content</div>
+                                </div>
+                                <span class="pending-badge">Beklemede</span>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="empty-mini">Onay bekleyen yorum yok.</div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="panel-card">
+                <div class="panel-head">
+                    <h5>Hızlı Erişim</h5>
+                </div>
+                <div class="quick-links">
+                    <a href="/Admin/Destination/CreateDestination" class="quick-link">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                        <span>Yeni Destinasyon</span>
+                    </a>
+                    <a href="/Admin/Guide/CreateGuide" class="quick-link">
+                        <i class="fa fa-user-plus" aria-hidden="true"></i>
+                        <span>Yeni Rehber</span>
+                    </a>
+                    <a href="/Admin/Testimonial/CreateTestimonial" class="quick-link">
+                        <i class="fa fa-quote-left" aria-hidden="true"></i>
+                        <span>Yeni Referans</span>
+                    </a>
+                    <a href="/Admin/Contact/UpdateContact/@ViewBag.ContactId" class="quick-link">
+                        <i class="fa fa-address-book" aria-hidden="true"></i>
+                        <span>İletişim Düzenle</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="panel-card">
+                <div class="panel-head">
+                    <h5>Popüler Destinasyonlar</h5>
+                    <a href="/Admin/Destination/DestinationList">Tümü</a>
+                </div>
+                <div class="panel-body">
+                    @if (ViewBag.TopDestinations != null && ((IEnumerable<dynamic>)ViewBag.TopDestinations).Any())
+                    {
+                        int rank = 1;
+                        @foreach (var d in ViewBag.TopDestinations)
+                        {
+                            <div class="top-dest-item">
+                                <div class="td-rank">@rank</div>
+                                <img src="@d.Image" alt="@d.City" />
+                                <div class="td-info">
+                                    <div class="td-name">@d.City</div>
+                                    <div class="td-price">₺@d.Price</div>
+                                </div>
+                            </div>
+                            rank++;
+                        }
+                    }
+                    else
+                    {
+                        <div class="empty-mini">Henüz destinasyon bulunmuyor.</div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
