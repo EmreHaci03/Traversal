@@ -1,8 +1,41 @@
-# 🌍 Traversal — Seyahat & Tur Rezervasyon Platformu
+<div align="center">
 
-.NET Core • SQL Server • Entity Framework Core • Identity • AutoMapper • SignalR • FluentValidation • MediatR
+# 🌍 Traversal
 
-Modern, dinamik ve kullanıcı dostu bir seyahat & tur rezervasyon platformu.
+### ASP.NET Core 6 ile geliştirilmiş çok katmanlı seyahat & tur rezervasyon platformu
+
+[![.NET](https://img.shields.io/badge/.NET-6.0-512BD4?style=for-the-badge&logo=dotnet)](https://dotnet.microsoft.com/)
+[![EF Core](https://img.shields.io/badge/EF%20Core-6.0-512BD4?style=for-the-badge&logo=dotnet)](https://docs.microsoft.com/ef/)
+[![SQL Server](https://img.shields.io/badge/SQL%20Server-CC2927?style=for-the-badge&logo=microsoftsqlserver&logoColor=white)](https://www.microsoft.com/sql-server)
+[![Identity](https://img.shields.io/badge/ASP.NET%20Identity-512BD4?style=for-the-badge&logo=dotnet)](https://docs.microsoft.com/aspnet/core/security/authentication/identity)
+[![SignalR](https://img.shields.io/badge/SignalR-512BD4?style=for-the-badge&logo=dotnet)](https://dotnet.microsoft.com/apps/aspnet/signalr)
+[![MediatR](https://img.shields.io/badge/MediatR-CQRS-orange?style=for-the-badge)](https://github.com/jbogard/MediatR)
+[![AutoMapper](https://img.shields.io/badge/AutoMapper-B33B9E?style=for-the-badge)](https://automapper.org/)
+[![FluentValidation](https://img.shields.io/badge/FluentValidation-2E8B57?style=for-the-badge)](https://fluentvalidation.net/)
+[![ClosedXML](https://img.shields.io/badge/ClosedXML-Excel-217346?style=for-the-badge&logo=microsoftexcel&logoColor=white)](https://github.com/ClosedXML/ClosedXML)
+[![MailKit](https://img.shields.io/badge/MailKit-SMTP-blue?style=for-the-badge)](https://github.com/jstedfast/MailKit)
+
+</div>
+
+---
+
+## 📖 İçindekiler
+
+- [Proje Hakkında](#-proje-hakkında)
+- [Ekran Görüntüleri](#-ekran-görüntüleri)
+- [Kullanılan Teknolojiler](#️-kullanılan-teknolojiler)
+- [Mimari](#-mimari)
+- [Özellikler](#-özellikler)
+- [Kurulum](#-kurulum)
+- [Proje Yapısı](#-proje-yapısı)
+
+---
+
+## 📌 Proje Hakkında
+
+**Traversal**, seyahat acenteleri ve bireysel kullanıcılar için geliştirilmiş, **N-katmanlı mimari** üzerine kurulu full-stack bir web uygulamasıdır. SQL Server tabanlı ilişkisel veritabanı ile dinamik içerik yönetimi sunar; hem kullanıcı arayüzü hem de admin paneli tarafında eksiksiz çalışan işlevsel bir sistem sağlar.
+
+> 🎯 Kullanıcılar tur listesini görüntüleyip rezervasyon yapabilir, admin panelinden tüm içerikler yönetilebilir, rezervasyon sonrası otomatik onay maili gönderilir ve admin paneli SignalR ile anlık istatistiklerle beslenir.
 
 ---
 
@@ -10,142 +43,283 @@ Modern, dinamik ve kullanıcı dostu bir seyahat & tur rezervasyon platformu.
 
 ### 🌍 Kullanıcı Arayüzü
 
-**Ana Sayfa**
-![Ana Sayfa](wwwroot/images/Ana%20Sayfa.png)
-![Ana Sayfa 2](wwwroot/images/Ana%20Sayfa%202.png)
-![Ana Sayfa 3](wwwroot/images/Ana%20Sayfa%203.png)
+<table>
+<tr>
+<td width="50%">
 
-**Destinasyonlar**
-![Destinasyonlar](wwwroot/images/Destinasyonlar.png)
+**Ana Sayfa**
+![Ana Sayfa]([wwwroot/images/Ana%20Sayfa.png](https://github.com/EmreHaci03/Traversal/blob/main/Traversal/Traversal.WebUI/wwwroot/images/Ana%20Sayfa.png))
+
+</td>
+<td width="50%">
+
+**Ana Sayfa — Öne Çıkanlar**
+![Ana Sayfa 2]([wwwroot/images/Ana%20Sayfa%202.png](https://github.com/EmreHaci03/Traversal/blob/main/Traversal/Traversal.WebUI/wwwroot/images/Ana%20Sayfa%202.png))
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+**Ana Sayfa — Referanslar**
+![Ana Sayfa 3]([wwwroot/images/Ana%20Sayfa%203.png](https://github.com/EmreHaci03/Traversal/blob/main/Traversal/Traversal.WebUI/wwwroot/images/Ana%20Sayfa%203.png))
+
+</td>
+<td width="50%">
+
+**Destinasyon Listesi**
+![Destinasyonlar]([wwwroot/images/Destinasyonlar.png](https://github.com/EmreHaci03/Traversal/blob/main/Traversal/Traversal.WebUI/wwwroot/images/Destinasyonlar.png))
+
+</td>
+</tr>
+<tr>
+<td width="50%">
 
 **Destinasyon Detay**
-![Destinasyon Detay](wwwroot/images/Destinasyon%20Detay.png)
-![Destinasyon Detay 2](wwwroot/images/Destinasyon%20Detay%202.png)
+![Destinasyon Detay]([wwwroot/images/Destinasyon%20Detay.png](https://github.com/EmreHaci03/Traversal/blob/main/Traversal/Traversal.WebUI/wwwroot/images/Destinasyon%20Detay.png))
+
+</td>
+<td width="50%">
+
+**Destinasyon Detay — Devamı**
+![Destinasyon Detay 2]([wwwroot/images/Destinasyon%20Detay%202.png](https://github.com/EmreHaci03/Traversal/blob/main/Traversal/Traversal.WebUI/wwwroot/images/Destinasyon%20Detay%202.png))
+
+</td>
+</tr>
+<tr>
+<td width="50%">
 
 **Hakkımızda**
-![Hakkımızda](wwwroot/images/Hakkımızda.png)
-![Hakkımızda 2](wwwroot/images/Hakkımızda%202.png)
+![Hakkımızda]([wwwroot/images/Hakkımızda.png](https://github.com/EmreHaci03/Traversal/blob/main/Traversal/Traversal.WebUI/wwwroot/images/Hakk%C4%B1m%C4%B1zda.png))
+
+</td>
+<td width="50%">
+
+**Hakkımızda — Devamı**
+![Hakkımızda 2]([wwwroot/images/Hakkımızda%202.png](https://github.com/EmreHaci03/Traversal/blob/main/Traversal/Traversal.WebUI/wwwroot/images/Hakk%C4%B1m%C4%B1zda%202.png))
+
+</td>
+</tr>
+<tr>
+<td width="50%">
 
 **İletişim**
-![İletişim](wwwroot/images/İletişim.png)
+![İletişim]([wwwroot/images/İletişim.png](https://github.com/EmreHaci03/Traversal/blob/main/Traversal/Traversal.WebUI/wwwroot/images/%C4%B0leti%C5%9Fim.png))
+
+</td>
+<td width="50%"></td>
+</tr>
+</table>
 
 ### 👤 Üye Paneli
 
+<table>
+<tr>
+<td width="50%">
+
 **Üye Dashboard**
-![Member Dashboard](wwwroot/images/Member%20Dashboard.png)
+![Member Dashboard]([wwwroot/images/Member%20Dashboard.png](https://github.com/EmreHaci03/Traversal/blob/main/Traversal/Traversal.WebUI/wwwroot/images/Member%20Dashboard.png))
+
+</td>
+<td width="50%">
 
 **Profil Ekranı**
-![Üye Profil Ekranı](wwwroot/images/Üye%20Profil%20Ekranı.png)
+![Üye Profil Ekranı]([wwwroot/images/Üye%20Profil%20Ekranı.png](https://github.com/EmreHaci03/Traversal/blob/main/Traversal/Traversal.WebUI/wwwroot/images/%C3%9Cye%20Profil%20Ekran%C4%B1.png))
 
-**Rezervasyon**
-![Üye Rezervasyon](wwwroot/images/Üye%20Rezervasyon.png)
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+**Rezervasyon İşlemleri**
+![Üye Rezervasyon]([wwwroot/images/Üye%20Rezervasyon.png](https://github.com/EmreHaci03/Traversal/blob/main/Traversal/Traversal.WebUI/wwwroot/images/%C3%9Cye%20Rezervasyon.png))
+
+</td>
+<td width="50%">
 
 **Aktif Tur Listesi**
-![Üye Aktif Tur Liste](wwwroot/images/Üye%20Aktif%20Tur%20Liste.png)
+![Üye Aktif Tur Liste]([wwwroot/images/Üye%20Aktif%20Tur%20Liste.png](https://github.com/EmreHaci03/Traversal/blob/main/Traversal/Traversal.WebUI/wwwroot/images/%C3%9Cye%20Aktif%20Tur%20Liste.png))
+
+</td>
+</tr>
+<tr>
+<td width="50%">
 
 **Favori Destinasyonlar**
-![Üye Favori Destinasyon](wwwroot/images/Üye%20Favori%20Destinasyon.png)
+![Üye Favori Destinasyon]([wwwroot/images/Üye%20Favori%20Destinasyon.png](https://github.com/EmreHaci03/Traversal/blob/main/Traversal/Traversal.WebUI/wwwroot/images/%C3%9Cye%20Favori%20Destinasyon.png))
+
+</td>
+<td width="50%">
 
 **Yorum Listesi**
-![Üye Yorum Listesi](wwwroot/images/Üye%20Yorum%20Listesi.png)
+![Üye Yorum Listesi]([wwwroot/images/Üye%20Yorum%20Listesi.png](https://github.com/EmreHaci03/Traversal/blob/main/Traversal/Traversal.WebUI/wwwroot/images/%C3%9Cye%20Yorum%20Listesi.png))
+
+</td>
+</tr>
+</table>
 
 ### 🛠️ Admin Paneli
 
+<table>
+<tr>
+<td width="50%">
+
 **Dashboard**
-![Admin Dashboard](wwwroot/images/Admin%20Dashboard.png)
+![Admin Dashboard]([wwwroot/images/Admin%20Dashboard.png](https://github.com/EmreHaci03/Traversal/blob/main/Traversal/Traversal.WebUI/wwwroot/images/Admin%20Dashboard.png))
 
-**SignalR Anlık Veriler**
-![Admin SignalR Anlık Veri](wwwroot/images/Admin%20SignalR%20Anlık%20Veri.png)
+</td>
+<td width="50%">
 
-**Destinasyon Listesi**
-![Admin Destinasyon Liste](wwwroot/images/Admin%20Destinasyon%20Liste.png)
+**SignalR — Anlık Veriler**
+![Admin SignalR Anlık Veri]([wwwroot/images/Admin%20SignalR%20Anlık%20Veri.png](https://github.com/EmreHaci03/Traversal/blob/main/Traversal/Traversal.WebUI/wwwroot/images/Admin%20SignalR%20Anl%C4%B1k%20Veri.png))
 
-**Rezervasyon Listesi**
-![Admin Rezervasyon Liste](wwwroot/images/Admin%20Rezervasyon%20Liste.png)
+</td>
+</tr>
+<tr>
+<td width="50%">
 
-**Kullanıcılar**
-![Admin Kullanıcılar](wwwroot/images/Admin%20Kullanıcılar.png)
+**Destinasyon Yönetimi**
+![Admin Destinasyon Liste]([wwwroot/images/Admin%20Destinasyon%20Liste.png](https://github.com/EmreHaci03/Traversal/blob/main/Traversal/Traversal.WebUI/wwwroot/images/Admin%20Destinasyon%20Liste.png))
 
-**Roller**
-![Admin Roller](wwwroot/images/Admin%20Roller.png)
+</td>
+<td width="50%">
+
+**Rezervasyon Yönetimi**
+![Admin Rezervasyon Liste]([wwwroot/images/Admin%20Rezervasyon%20Liste.png](https://github.com/EmreHaci03/Traversal/blob/main/Traversal/Traversal.WebUI/wwwroot/images/Admin%20Rezervasyon%20Liste.png))
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+**Kullanıcı Yönetimi**
+![Admin Kullanıcılar]([wwwroot/images/Admin%20Kullanıcılar.png](https://github.com/EmreHaci03/Traversal/blob/main/Traversal/Traversal.WebUI/wwwroot/images/Admin%20Kullan%C4%B1c%C4%B1lar.png))
+
+</td>
+<td width="50%">
+
+**Rol Yönetimi**
+![Admin Roller]([wwwroot/images/Admin%20Roller.png](https://github.com/EmreHaci03/Traversal/blob/main/Traversal/Traversal.WebUI/wwwroot/images/Admin%20Roller.png))
+
+</td>
+</tr>
+</table>
 
 ### ⚠️ Hata Sayfaları
 
-| 401 | 403 | 404 |
-|---|---|---|
-| ![401](wwwroot/images/401%20Sayfası.png) | ![403](wwwroot/images/403%20Sayfası.png) | ![404](wwwroot/images/404%20Sayfası.png) |
+<table>
+<tr>
+<td width="33%">
+
+**401 - Yetkisiz**
+![401]([wwwroot/images/401%20Sayfası.png](https://github.com/EmreHaci03/Traversal/blob/main/Traversal/Traversal.WebUI/wwwroot/images/401%20Sayfas%C4%B1.png))
+
+</td>
+<td width="33%">
+
+**403 - Erişim Engellendi**
+![403]([wwwroot/images/403%20Sayfası.png](https://github.com/EmreHaci03/Traversal/blob/main/Traversal/Traversal.WebUI/wwwroot/images/403%20Sayfas%C4%B1.png))
+
+</td>
+<td width="33%">
+
+**404 - Sayfa Bulunamadı**
+![404]([wwwroot/images/404%20Sayfası.png](https://github.com/EmreHaci03/Traversal/blob/main/Traversal/Traversal.WebUI/wwwroot/images/404%20Sayfas%C4%B1.png))
+
+</td>
+</tr>
+</table>
 
 ---
 
-## 📌 Proje Hakkında
+## 🛠️ Kullanılan Teknolojiler
 
-**Traversal**, seyahat acenteleri ve bireysel kullanıcılar için geliştirilmiş, N-katmanlı mimari üzerine kurulu full-stack bir web uygulamasıdır. SQL Server tabanlı ilişkisel veritabanı ile dinamik içerik yönetimi sunar; hem kullanıcı arayüzü hem de admin paneli tarafında eksiksiz çalışan işlevsel bir sistem sağlar.
-
-### Temel Hedefler
-
-- 🧳 Kullanıcıların tur listesini görüntüleyip rezervasyon yapabilmesi
-- 🛠️ Admin panel üzerinden tüm içeriklerin yönetilebilmesi
-- 📧 Rezervasyon sonrası otomatik onay maili gönderimi
-- 📊 Anlık istatistiklerin SignalR ile canlı takibi
-- 💱 Güncel döviz kuru ve hava durumu entegrasyonu
-
----
-
-## 🖥️ Kullanıcı Arayüzü
-
-### 🗺️ Ana Sayfa & Tur Vitrini
-
-- Dinamik ana slider, öne çıkan destinasyonlar, istatistik alanı
-- Tüm tur verileri, kategori ve fiyat bilgileri veritabanından dinamik olarak çekilir
-- "Neden Biz", "Hakkımızda", referanslar ve bilgi kartları dinamik içerik olarak yönetilir
-
-### 📄 Destinasyon Detay Sayfası
-
-| Bölüm | İçerik |
+| Kategori | Teknoloji |
 |---|---|
-| 📋 Tur Bilgileri | Kapasite, süre, fiyat ve genel açıklama |
-| 🗓️ Tur Planı | Gün gün program (Details1 / Details2) |
-| ⭐ Yorumlar | Kullanıcı yorumları, admin onayından geçmiş içerikler |
-| 🖼️ Galeri | Tura özel fotoğraf görselleri (Image / CoverImage / Image2) |
-
-### 🎟️ Rezervasyon Akışı
-
-- Kullanıcı girişi zorunlu, kişi sayısına göre rezervasyon oluşturma
-- Rezervasyon durumu takibi: **Beklemede / Onaylandı / İptal**
-- Rezervasyon oluşturulduğunda kullanıcıya otomatik onay maili (SMTP - MailKit)
-- Benzersiz rezervasyon kodu üretimi (`VIT-XXXXXXXX`)
-
-### ❤️ Favoriler
-
-- Kullanıcılar beğendikleri destinasyonları favorilere ekleyip listeleyebilir
-- Aynı destinasyonun tekrar favoriye eklenmesini önleyen kontrol mekanizması
+| **Backend** | ASP.NET Core MVC (.NET 6) |
+| **Veritabanı** | SQL Server, Entity Framework Core |
+| **Kimlik Doğrulama** | ASP.NET Core Identity, Cookie Authentication, Role-Based Authorization |
+| **Nesne Eşleme** | AutoMapper |
+| **Doğrulama** | FluentValidation |
+| **Gerçek Zamanlı İletişim** | SignalR |
+| **CQRS** | MediatR (Destinasyon modülünde uygulanmıştır) |
+| **Mail Gönderimi** | MailKit / MimeKit (SMTP) |
+| **Excel Raporlama** | ClosedXML |
+| **PDF İşlemleri** | QuestPDF |
+| **Frontend** | HTML5, CSS3, JavaScript, jQuery |
+| **Dış API Entegrasyonu** | RapidAPI (Döviz Kuru, Altın, Hava Durumu) |
 
 ---
 
-## 🛠️ Admin Paneli
+## 🏗️ Mimari
 
-Sıfırdan tasarlanmış, modern ve responsive bir yönetim arayüzü.
+Proje, **Generic Repository Pattern** temelli N-katmanlı mimari üzerine kurulmuştur:
 
-### CRUD Yönetimi
+```
+Traversal.EntityLayer      →  Veritabanı varlıkları (Entities)
+Traversal.DataAccessLayer  →  Generic Repository Pattern, EF Core sorguları
+Traversal.BusinessLayer    →  Servisler, FluentValidation kuralları
+Traversal.DtoLayer         →  Data Transfer Object'ler
+Traversal.WebUI            →  MVC Controller'lar, View'lar, Area yapısı, CQRS/MediatR
+```
+
+### Mimari Prensipler
+
+- 🧩 **N-Katmanlı Mimari** — Generic Repository Pattern ile DAL/Service ayrımı
+- 🔐 **Area Yapısı** — Admin ve Member panelleri birbirinden bağımsız, izole modüller
+- 🔄 **AutoMapper** — Entity ↔ DTO dönüşümlerinde tutarlı ve merkezi mapping yönetimi
+- ✅ **FluentValidation** — İş kurallarının Business Layer'da, DTO'lardan bağımsız yönetimi
+- 🧱 **ViewComponent Kullanımı** — Yeniden kullanılabilir, veri odaklı UI parçaları (yorum listesi, öne çıkan içerikler)
+- ⚡ **CQRS & MediatR** — Destinasyon modülü, Command/Query ayrımı ve MediatR pipeline'ı ile ayrıca geliştirilmiştir
+
+### 🔀 CQRS / MediatR Kullanımı
+
+Projede genel CRUD işlemleri klasik **Service Layer** yaklaşımıyla yönetilirken, **Destinasyon modülü** bilinçli olarak **CQRS (Command Query Responsibility Segregation)** prensibiyle, **MediatR** kütüphanesi kullanılarak ayrıca geliştirilmiştir:
+
+```
+Traversal.WebUI/CQRS/
+├── Command/      →  Create/Update işlemlerini temsil eden komut nesneleri
+├── Handler/      →  Command/Query'leri işleyen handler sınıfları
+└── Result/       →  Query sonuçlarını taşıyan result nesneleri
+```
+
+- `IRequestHandler<TRequest, TResponse>` implementasyonları ile okuma (Query) ve yazma (Command) sorumlulukları ayrıştırılmıştır
+- Controller katmanı, `IMediator.Send(...)` üzerinden ilgili handler'a yönlendirme yapar
+- Bu yapı, **aynı proje içinde hem klasik N-katmanlı mimarinin hem de CQRS yaklaşımının karşılaştırmalı olarak uygulanması** amacıyla tercih edilmiştir
+
+---
+
+## ✨ Özellikler
+
+### 🌍 Kullanıcı Tarafı
+
+- Dinamik ana sayfa: slider, öne çıkan destinasyonlar, istatistikler, referanslar
+- Destinasyon detay sayfası: tur bilgisi, gün gün program, yorumlar, görsel galerisi
+- Kullanıcı girişi zorunlu rezervasyon akışı (Beklemede / Onaylandı / İptal durumları)
+- Rezervasyon sonrası otomatik SMTP onay maili (benzersiz `VIT-XXXXXXXX` kodu ile)
+- Favori destinasyon ekleme/listeleme
+- Kullanıcı yorumu bırakma (admin onayı sonrası yayınlanır)
+
+### 🛠️ Admin Paneli
 
 | Modül | İşlemler |
 |---|---|
-| 🏖️ Destinasyonlar | Listeleme, Ekleme, Güncelleme, Silme, Excel'e Aktarma |
+| 🏖️ Destinasyonlar | Listeleme, Ekleme, Güncelleme, Silme, **Excel'e Aktarma** |
 | 🖼️ Vitrin İçerikleri | Öne Çıkan (Ana/Izgara), Bilgi Kartları |
-| 🧑‍💼 Rehberler | Listeleme, Ekleme, Güncelleme, Silme, Excel'e Aktarma |
+| 🧑‍💼 Rehberler | Listeleme, Ekleme, Güncelleme, Silme, **Excel'e Aktarma** |
 | ℹ️ Hakkımızda / Neden Biz | İçerik yönetimi |
 | ⭐ Yorumlar | Listeleme, Onaylama, Silme |
 | 💬 Referanslar | Listeleme, Ekleme, Güncelleme, Silme |
 | ✉️ Mesajlar | Okunan / Okunmayan mesaj yönetimi, otomatik okundu işaretleme |
-| 📅 Rezervasyonlar | Onaylama, İptal Etme, Excel'e Aktarma |
-| 👥 Kullanıcılar | Listeleme, Detay Görüntüleme, Silme, Excel'e Aktarma |
+| 📅 Rezervasyonlar | Onaylama, İptal Etme, **Excel'e Aktarma** |
+| 👥 Kullanıcılar | Listeleme, Detay Görüntüleme, Silme, **Excel'e Aktarma** |
 | 🛡️ Roller | Rol tanımlama, kullanıcıya rol atama |
 | 📞 İletişim Bilgileri | Site geneli iletişim bilgisi yönetimi |
 | 📰 Bülten Aboneleri | Abone listesi görüntüleme |
 
 ### 📊 Anlık Veriler (SignalR)
 
-Admin panelinde, **SignalR** ile gerçek zamanlı güncellenen istatistik paneli:
+Admin panelinde, **SignalR** ile gerçek zamanlı güncellenen istatistik paneli bulunur:
 
 - Toplam destinasyon, rezervasyon, kullanıcı, yorum, favori ve referans sayıları
 - Onaylanan / Bekleyen / İptal edilen rezervasyon dağılımı
@@ -153,74 +327,13 @@ Admin panelinde, **SignalR** ile gerçek zamanlı güncellenen istatistik paneli
 
 ### 💱 Piyasa Verileri
 
-RapidAPI entegrasyonu ile dashboard üzerinde:
+**RapidAPI** entegrasyonu ile admin dashboard üzerinde:
 
 - USD, EUR, GBP güncel döviz kurları
 - Gram altın fiyatı
 - İstanbul hava durumu bilgisi
 
-### 📈 Raporlama
-
-- **ClosedXML** ile Excel raporu indirme (Destinasyonlar, Rezervasyonlar, Kullanıcılar)
-- Her liste sayfasında özet istatistik kartları
-
----
-
-## ⚙️ Teknik Altyapı
-
-### Mimari
-
-```
-Traversal.EntityLayer      → Veritabanı varlıkları (Entities)
-Traversal.DataAccessLayer  → Generic Repository Pattern, EF Core
-Traversal.BusinessLayer    → Servisler, FluentValidation kuralları
-Traversal.DtoLayer         → Data Transfer Object'ler
-Traversal.WebUI            → MVC Controller'lar, View'lar, Area yapısı
-```
-
-### Kullanılan Teknolojiler
-
-| Katman | Teknoloji |
-|---|---|
-| Backend | ASP.NET Core MVC (.NET 6) |
-| Veritabanı | SQL Server, Entity Framework Core |
-| Kimlik Doğrulama | ASP.NET Core Identity (Custom Error Describer ile) |
-| Nesne Eşleme | AutoMapper |
-| Doğrulama | FluentValidation |
-| Gerçek Zamanlı İletişim | SignalR |
-| Mail Gönderimi | MailKit / MimeKit (SMTP) |
-| Excel İşlemleri | ClosedXML |
-| PDF İşlemleri | QuestPDF |
-| Frontend | HTML5, CSS3, JavaScript, jQuery |
-| Dış API Entegrasyonu | RapidAPI (Döviz, Altın, Hava Durumu) |
-
-### Mimari Prensipler
-
-- **N-Katmanlı Mimari** — Generic Repository Pattern ile DAL/Service ayrımı
-- **Area Yapısı** — Admin ve Member panelleri birbirinden bağımsız, izole modüller
-- **AutoMapper** — Entity ↔ DTO dönüşümlerinde tutarlı ve merkezi mapping yönetimi
-- **FluentValidation** — İş kurallarının Business Layer'da, DTO'lardan bağımsız yönetimi
-- **ViewComponent Kullanımı** — Yeniden kullanılabilir, veri odaklı UI parçaları (yorum listesi, öne çıkan içerikler)
-- **CQRS & MediatR** — Destinasyon modülü, Command/Query ayrımı ve MediatR pipeline'ı ile geliştirilmiştir; klasik Service katmanına alternatif bir yaklaşımın uygulamalı denemesi olarak projeye entegre edilmiştir
-
-### CQRS / MediatR Kullanımı
-
-Projede genel CRUD işlemleri klasik **Service Layer** yaklaşımıyla yönetilirken, **Destinasyon** modülü bilinçli olarak **CQRS (Command Query Responsibility Segregation)** prensibiyle, **MediatR** kütüphanesi kullanılarak ayrıca geliştirilmiştir:
-
-```
-Traversal.WebUI/CQRS/
-├── Command/      → Create/Update işlemlerini temsil eden komut nesneleri
-├── Handler/      → Command/Query'leri işleyen handler sınıfları
-└── Result/       → Query sonuçlarını taşıyan result nesneleri
-```
-
-- `IRequestHandler<TRequest, TResponse>` implementasyonları ile okuma (Query) ve yazma (Command) sorumlulukları ayrıştırılmıştır
-- Controller katmanı, `IMediator.Send(...)` üzerinden ilgili handler'a yönlendirme yapar
-- Bu yapı, aynı proje içinde **hem klasik N-katmanlı mimarinin hem de CQRS yaklaşımının karşılaştırmalı olarak uygulanması** amacıyla tercih edilmiştir
-
----
-
-## 🔐 Kimlik Doğrulama & Yetkilendirme
+### 🔐 Kimlik Doğrulama & Yetkilendirme
 
 - ASP.NET Core Identity ile kullanıcı kayıt/giriş sistemi
 - Cookie tabanlı authentication
@@ -235,8 +348,6 @@ Traversal.WebUI/CQRS/
 ```bash
 # Depoyu klonlayın
 git clone https://github.com/kullaniciadi/traversal.git
-
-# Proje dizinine gidin
 cd traversal
 
 # appsettings.json içindeki bağlantı dizesini kendi SQL Server'ınıza göre düzenleyin
@@ -256,11 +367,17 @@ Update-Database
     "Port": 587
 }
 
+# RapidAPI anahtarlarınızı tanımlayın
+"RapidApi": {
+    "CurrencyKey": "your-currency-api-key",
+    "GoldKey": "your-gold-api-key"
+}
+
 # Projeyi çalıştırın
 dotnet run --project Traversal.WebUI
 ```
 
-> **Not:** Gmail SMTP kullanıyorsanız, normal hesap şifreniz yerine [Google Uygulama Şifresi](https://myaccount.google.com/apppasswords) oluşturmanız gerekmektedir.
+> ⚠️ **Not:** Gmail SMTP kullanıyorsanız, normal hesap şifreniz yerine [Google Uygulama Şifresi](https://myaccount.google.com/apppasswords) oluşturmanız gerekmektedir.
 
 ---
 
@@ -288,6 +405,10 @@ Traversal/
     ├── Controllers/
     ├── ViewComponents/
     ├── SignalRHub/
+    ├── CQRS/
+    │   ├── Command/
+    │   ├── Handler/
+    │   └── Result/
     ├── Extensions/
     └── Views/
 ```
@@ -296,24 +417,23 @@ Traversal/
 
 ## 🎯 Öne Çıkan Özellikler
 
-- ✅ Tam fonksiyonel N-katmanlı mimari
+- ✅ Tam fonksiyonel N-katmanlı mimari + CQRS/MediatR karşılaştırması
 - ✅ Admin & Member panel ayrımı (Area Pattern)
 - ✅ Gerçek zamanlı veri akışı (SignalR)
 - ✅ Otomatik email bildirimi (rezervasyon onayı)
 - ✅ FluentValidation ile merkezi doğrulama yönetimi
-- ✅ Excel raporlama
+- ✅ Excel raporlama (Destinasyon, Rezervasyon, Kullanıcı, Rehber modüllerinde)
 - ✅ Dış API entegrasyonu (döviz, altın, hava durumu)
 - ✅ Responsive, modern arayüz tasarımı
 - ✅ Rol bazlı erişim kontrolü
+- ✅ Özel tasarlanmış hata sayfaları (401 / 403 / 404)
 
 ---
 
-## 👤 Geliştirici
+<div align="center">
 
-Bu proje, ASP.NET Core ile N-katmanlı mimari, Identity, AutoMapper ve modern web teknolojilerini uygulamalı olarak öğrenmek amacıyla geliştirilmiştir.
+### 👤 Geliştirici
 
----
+Bu proje, ASP.NET Core ile N-katmanlı mimari, Identity, AutoMapper, SignalR, CQRS/MediatR ve modern web teknolojilerini uygulamalı olarak öğrenmek amacıyla geliştirilmiştir.
 
-## 📄 Lisans
-
-Bu proje eğitim amaçlı geliştirilmiştir.
+</div>
